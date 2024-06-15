@@ -1,10 +1,54 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function Login() {
   let [accountType, setAccountType] = useState('student')
   function handleAccountTypeChange(e) {
     setAccountType(e.target.value)
+  }
+
+  let [loginStatus, setLoginStatus] = useState(null)
+  let [loginMessage, setLoginMessage] = useState('')
+  let [isLoading, setIsLoading] = useState(false)
+
+  function formSubmit (e) {
+    setIsLoading(true)
+    e.preventDefault()
+    const form = e.target
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData)
+    fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      setIsLoading(false)
+      if (data.status === 200) {
+        setLoginStatus('success')
+      } else {
+        setLoginStatus('error')
+        setLoginMessage([data.error.message, 'Details: ' + data.error.Details])
+      }
+      console.log('Response:', data)
+      setTimeout(() => {
+        setLoginStatus(null)
+        setLoginMessage(null)
+      }, 5000)
+    })
+    .catch(error => {
+      console.error('Error:', error)
+      setLoginStatus('error')
+      setIsLoading(false)
+      setTimeout(() => {
+        setLoginStatus(null)
+        setLoginMessage(null)
+      }, 5000)
+    })
   }
 
   return (
@@ -15,12 +59,37 @@ export default function Login() {
             Welcome Again
           </h2>
         </div>
-        <form className="mt-8 space-y-6" action="#" method="POST">
+        {loginStatus === 'success' ? (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <strong className="font-bold">Success!
+              Click here to &nbsp;
+              <Link href="/dashboard" className="underline">Dashboard</Link>
+            </strong>
+          </div>
+        ) : loginStatus === 'error' ? (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong className="font-bold">Error! <br/>
+
+              {
+              loginMessage.length > 0 &&
+              loginMessage.map((msg, index) => (
+                <span key={index}>{msg}<br/></span>
+              ))
+              }
+
+            </strong>
+          </div>
+        ) : null}
+        <form className="mt-8 space-y-6" action="#" method="POST"
+          onSubmit={formSubmit}
+        >
           <input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label htmlFor="account-type" className="sr-only">Account Type</label>
-              <select id="account-type" name="account-type" className="block w-full py-3 px-3 border text-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              <label htmlFor="accountType" className="sr-only">Account Type</label>
+              <select id="accountType" name="accountType"
+              value={accountType}
+              className="block w-full py-3 px-3 border text-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 onChange={handleAccountTypeChange}
               >
                 <option value="student">Student</option>
@@ -48,11 +117,17 @@ export default function Login() {
             </div>
           </div>
           <div>
-            <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Register
+            <button
+            disabled={isLoading}
+            type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              {isLoading ? 'Loading...' : 'Login'}
             </button>
           </div>
         </form>
+        <small className="block text-center text-gray-500">
+          Don&apos;t have an account?&nbsp;
+          <Link href="/registration" className="underline text-blue-500">Register</Link>
+        </small>
       </div>
     </div>
   );
