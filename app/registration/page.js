@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import EyeButton from '@/components/eyeButton'
 
 export default function Registration() {
 
@@ -74,7 +75,7 @@ export default function Registration() {
             <div className="rounded-md shadow-sm space-y-4">
               <div>
                 <label htmlFor="account-type" className="sr-only">Account Type</label>
-                <select id="account-type" name="accountType" className="block w-full py-3 px-3 border text-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                <select id="account-type" name="accountType" className="block w-full py-3 px-3 border text-gray-500 rounded-t-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   onChange={handleAccountTypeChange}
                 >
                   <option value="student">Student</option>
@@ -83,13 +84,13 @@ export default function Registration() {
               </div>
               <div>
                 <label htmlFor="name" className="sr-only">Name</label>
-                <input id="name" name="name" type="text" autoComplete="name" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Name" />
+                <input id="name" name="name" type="text" autoComplete="name" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Name" />
               </div>
 
               {accountType === 'student' && (
               <div>
                 <label htmlFor="roll" className="sr-only">Roll</label>
-                <input id="roll" name="roll" type="text" autoComplete="roll" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Roll" />
+                <input id="roll" name="roll" type="number" autoComplete="roll" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Roll" />
               </div>
               )}
 
@@ -97,9 +98,10 @@ export default function Registration() {
                 <label htmlFor="email-address" className="sr-only">Email address</label>
                 <input id="email-address" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" />
               </div>
-              <div>
+              <div className='flex'>
                 <label htmlFor="password" className="sr-only">Password</label>
-                <input id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
+                <input id="password" name="password" minLength={6} type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-bl-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
+                <EyeButton passwordID="password" />
               </div>
             </div>
             <div>

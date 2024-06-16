@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
 
 export function middleware(request) {
-  console.log('Middleware called')
-  const isAuthenticated = true
+  const isAuthenticated = false
 
   // If the user is authenticated, continue as normal
   if (isAuthenticated) {

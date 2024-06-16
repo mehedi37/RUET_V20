@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import EyeButton from '@/components/eyeButton'
 
 export default function Login() {
   let [accountType, setAccountType] = useState('student')
@@ -89,7 +90,7 @@ export default function Login() {
               <label htmlFor="accountType" className="sr-only">Account Type</label>
               <select id="accountType" name="accountType"
               value={accountType}
-              className="block w-full py-3 px-3 border text-gray-500 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="block w-full py-3 px-3 border text-gray-500 rounded-t-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 onChange={handleAccountTypeChange}
               >
                 <option value="student">Student</option>
@@ -100,7 +101,9 @@ export default function Login() {
             {accountType === 'student' && (
             <div>
               <label htmlFor="roll" className="sr-only">Roll</label>
-              <input id="roll" name="roll" type="text" autoComplete="roll" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Roll" />
+              <input id="roll" name="roll" type="number" autoComplete="roll" required
+              className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Roll" />
             </div>
             )}
 
@@ -111,9 +114,10 @@ export default function Login() {
             </div>
             )}
 
-            <div>
+            <div className='flex'>
               <label htmlFor="password" className="sr-only">Password</label>
-              <input id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
+              <input id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-bl-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
+              <EyeButton passwordID="password" />
             </div>
           </div>
           <div>

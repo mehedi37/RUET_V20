@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const inter = Inter({ subsets: ["latin"] });
 
