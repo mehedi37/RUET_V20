@@ -1,10 +1,10 @@
 import { createPool } from 'mysql2';
 
 const pool = createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'ruet_v20'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
 });
 
 pool.getConnection((err, connection) => {

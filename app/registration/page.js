@@ -90,7 +90,7 @@ export default function Registration() {
               {accountType === 'student' && (
               <div>
                 <label htmlFor="roll" className="sr-only">Roll</label>
-                <input id="roll" name="roll" type="number" autoComplete="roll" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Roll" />
+                <input id="roll" name="roll" type="number" min={0} autoComplete="roll" required className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Roll" />
               </div>
               )}
 
