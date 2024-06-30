@@ -33,7 +33,7 @@ export default function Login() {
         setLoginStatus('success')
       } else {
         setLoginStatus('error')
-        setLoginMessage([data.error.message, 'Details: ' + data.error.Details])
+        setLoginMessage([data.error.message, 'Details: ' + data.error.details])
       }
       console.log('Response:', data)
       setTimeout(() => {

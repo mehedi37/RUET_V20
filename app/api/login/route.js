@@ -26,8 +26,13 @@ export async function POST(req, res) {
     } else {
       user = await getTeacher(email, password);
     }
+    const errorPhrase = [
+      'Student not found',
+      'Teacher not found',
+      'Invalid password',
+    ]
 
-    if (user === 'Student not found' || user === 'Invalid password' || user === 'Teacher not found' || user === 'Invalid password') {
+    if (errorPhrase.includes(user)) {
       return NextResponse.json({
         status: 401,
         error: {

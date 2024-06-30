@@ -3,7 +3,7 @@ import { jwtVerify } from 'jose';
 import cookie from 'cookie';
 
 const publicRoutes = ['/login', '/registration'];
-const protectedRoutes = ['/dashboard', '/api/:path*'];
+const protectedRoutes = ['/dashboard', '/api/:path*', '/logout'];
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
