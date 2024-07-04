@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState } from "react";
 import {
   Table,
@@ -7,29 +7,37 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Spinner
+  Spinner,
 } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
+import Link from "next/link";
 
-export default function WeekNotice() {
-
+export default function DefaultWeekNotice() {
   function formatDate(dateString) {
-    const options = { weekday: 'short', day: 'numeric', month: 'short' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    const options = { weekday: "short", day: "numeric", month: "short" };
+    return new Date(dateString).toLocaleDateString("en-US", options);
   }
 
   const [isLoading, setIsLoading] = useState(true);
 
   let list = useAsyncList({
-    async load({signal}) {
+    async load({ signal }) {
       try {
         let res = await fetch(`http://localhost:3000/api/weekUpdate`, {
           signal,
         });
         let json = await res.json();
-        // console.log("Table: ", json.data);
-        setIsLoading(false);
 
+        // Check if the response indicates no data
+        if (json.data === process.env.NO_CT_FOUND) {
+          setNoDataMessage(json.data);
+          setIsLoading(false);
+          return {
+            items: [],
+          };
+        }
+
+        setIsLoading(false);
         return {
           items: json.data || [], // Ensure items is always an array
         };
@@ -51,30 +59,27 @@ export default function WeekNotice() {
         classNames={{
           table: "min-h",
         }}
-        layout="auto"
       >
         <TableHeader className="">
-          <TableColumn key="time">
-            Time
-          </TableColumn>
-          <TableColumn key="course_code">
-            Course Code
-          </TableColumn>
-          <TableColumn key="note">
-            Note
-          </TableColumn>
+          <TableColumn key="time">Time</TableColumn>
+          <TableColumn key="course_code">Course Code</TableColumn>
+          <TableColumn key="note">Note</TableColumn>
         </TableHeader>
         <TableBody
           items={list.items}
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
-          emptyContent="No data available"
+          emptyContent={process.env.NEXT_PUBLIC_NO_CT_ERROR}
         >
           {(item) => (
             <TableRow key={item.ct_id}>
               <TableCell>{formatDate(item.time)}</TableCell>
               <TableCell>{item.course_code}</TableCell>
-              <TableCell>{item.note}</TableCell>
+              <TableCell>
+                <Link href={`/dashboard/weekNoticeView/${item.ct_id}`}>
+                  {item.note.slice(0, 20)}
+                </Link>
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

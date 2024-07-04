@@ -1,13 +1,13 @@
-import { NextResponse } from 'next/server';
-import { jwtVerify } from 'jose';
-import cookie from 'cookie';
+import { NextResponse } from "next/server";
+import { jwtVerify } from "jose";
+import cookie from "cookie";
 
-const publicRoutes = ['/login', '/registration'];
-const protectedRoutes = ['/dashboard', '/api/:path*', '/logout'];
+const publicRoutes = ["/login", "/registration"];
+const protectedRoutes = ["/dashboard/:path*", "/api/:path*", "/logout"];
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
-  const cookies = cookie.parse(req.headers.get('cookie') || '');
+  const cookies = cookie.parse(req.headers.get("cookie") || "");
   const token = cookies.token;
 
   let isAuthenticated = false;
@@ -18,12 +18,12 @@ export async function middleware(req) {
       await jwtVerify(token, secret);
       isAuthenticated = true;
     } catch (err) {
-      console.error('Token verification failed:', err);
+      console.error("Token verification failed:", err);
     }
   }
 
   if (isAuthenticated && publicRoutes.includes(pathname)) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   if (publicRoutes.includes(pathname)) {
@@ -34,13 +34,13 @@ export async function middleware(req) {
     return NextResponse.next();
   }
 
-  if (protectedRoutes.some(route => pathname.startsWith(route))) {
-    return NextResponse.redirect(new URL('/login', req.url));
+  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/api/:path*', '/login', '/registration'],
+  matcher: ["/dashboard/:path*", "/api/:path*", "/login", "/registration"],
 };
