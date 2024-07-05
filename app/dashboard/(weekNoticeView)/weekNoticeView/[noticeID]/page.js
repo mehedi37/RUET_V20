@@ -1,7 +1,7 @@
 import CustomModal from "@/components/modal";
-import { getCTNoteInfo } from "@/lib/getCTInfo";
+import { getCTNoteInfo } from "@/lib/getNoticeInfo";
 
-export default async function NoticeView({ params }) {
+export default async function MainNoticeView({ params }) {
   const ctNote = await getCTNoteInfo(params.noticeID);
 
   return (

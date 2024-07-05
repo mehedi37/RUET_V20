@@ -1,16 +1,17 @@
 import { DecodeToken } from "@/lib/decode_token";
 import getRollInfo from "@/lib/getRollInfo";
-import { getCTInfo } from "@/lib/getNoticeInfo";
+import { getAllNoticeInfo } from "@/lib/getNoticeInfo";
 import { NextResponse } from "next/server";
 
 export async function GET(req, res) {
   try {
     const payload = await DecodeToken();
     const studentInfo = await getRollInfo(payload.roll);
-    const ctInfo = await getCTInfo(studentInfo);
+    const noticeInfo = await getAllNoticeInfo(studentInfo);
+    // console.log(noticeInfo);
     return NextResponse.json(
       {
-        data: ctInfo,
+        data: noticeInfo,
       },
       { status: 200 }
     );

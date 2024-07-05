@@ -41,7 +41,7 @@ export default function CustomModal({ title, time, data }) {
           <p>{data}</p>
         </ModalBody>
         <ModalFooter>
-          <Button color="danger" variant="light" onPress={onClose}>
+          <Button color="danger" variant="flat" onPress={onClose}>
             Close
           </Button>
         </ModalFooter>

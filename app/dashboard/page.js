@@ -1,10 +1,10 @@
+import greetings from "@/lib/greetings";
+
 export default async function DashBoard() {
+  const greeting = await greetings();
   return (
-    <>
-      <div>
-        <h1>Dashboard</h1>
-        <p>Welcome to the dashboard</p>
-      </div>
-    </>
+    <div className="text-center m-6">
+      <h1 className="text-3xl">{greeting}</h1>
+    </div>
   );
 }

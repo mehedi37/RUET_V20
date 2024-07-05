@@ -23,9 +23,12 @@ export default function DefaultWeekNotice() {
   let list = useAsyncList({
     async load({ signal }) {
       try {
-        let res = await fetch(`http://localhost:3000/api/weekUpdate`, {
-          signal,
-        });
+        let res = await fetch(
+          `${process.env.NEXT_PUBLIC_DOMAIN}/api/weekUpdate`,
+          {
+            signal,
+          }
+        );
         let json = await res.json();
 
         // Check if the response indicates no data
@@ -61,9 +64,15 @@ export default function DefaultWeekNotice() {
         }}
       >
         <TableHeader className="">
-          <TableColumn key="time">Time</TableColumn>
-          <TableColumn key="course_code">Course Code</TableColumn>
-          <TableColumn key="note">Note</TableColumn>
+          <TableColumn key="time" className="text-center">
+            Time
+          </TableColumn>
+          <TableColumn key="course_code" className="text-center">
+            Course Code
+          </TableColumn>
+          <TableColumn key="note" className="text-center">
+            Note
+          </TableColumn>
         </TableHeader>
         <TableBody
           items={list.items}
@@ -74,7 +83,7 @@ export default function DefaultWeekNotice() {
           {(item) => (
             <TableRow key={item.ct_id}>
               <TableCell>{formatDate(item.time)}</TableCell>
-              <TableCell>{item.course_code}</TableCell>
+              <TableCell className="text-center">{item.course_code}</TableCell>
               <TableCell>
                 <Link href={`/dashboard/weekNoticeView/${item.ct_id}`}>
                   {item.note.slice(0, 20)}
