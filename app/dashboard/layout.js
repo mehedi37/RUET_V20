@@ -9,7 +9,11 @@ export const metadata = {
   title: "Dashboard",
 };
 
-export default function DashboardLayout({ children, weekNotice, allNotice }) {
+export default async function DashboardLayout({
+  children,
+  weekNotice,
+  allNotice,
+}) {
   return (
     <>
       <Header />

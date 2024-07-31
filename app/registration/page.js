@@ -114,6 +114,7 @@ export default function Registration() {
                   type="text"
                   autoComplete="name"
                   required
+                  isRequired
                 />
               </div>
 
@@ -130,6 +131,7 @@ export default function Registration() {
                     min={0}
                     autoComplete="roll"
                     required
+                    isRequired
                   />
                 </div>
               )}
@@ -145,6 +147,7 @@ export default function Registration() {
                   type="email"
                   autoComplete="email"
                   required
+                  isRequired
                 />
               </div>
               <div className="flex">
@@ -159,6 +162,7 @@ export default function Registration() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  isRequired
                   endContent={<EyeButton passwordID="password" />}
                 />
               </div>

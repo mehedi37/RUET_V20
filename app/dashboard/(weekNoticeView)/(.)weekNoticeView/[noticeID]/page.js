@@ -1,8 +1,17 @@
 import CustomModal from "@/components/modal";
-import { getCTNoteInfo } from "@/lib/getNoticeInfo";
+import { getCTNoteInfo, getTeacherCTNote } from "@/lib/getNoticeInfo";
+import { DecodeToken } from "@/lib/decode_token";
 
 export default async function NoticeView({ params }) {
-  const ctNote = await getCTNoteInfo(params.noticeID);
+  const payload = await DecodeToken();
+
+  let ctNote;
+
+  if (payload.accountType === "student") {
+    ctNote = await getCTNoteInfo(params.noticeID);
+  } else {
+    ctNote = await getTeacherCTNote(params.noticeID);
+  }
 
   return (
     <div>

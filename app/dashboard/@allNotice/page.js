@@ -71,6 +71,9 @@ export default function AllNotice() {
           <TableColumn key="time" className="text-center">
             Time
           </TableColumn>
+          <TableColumn key="notice_creator" className="text-center">
+            From
+          </TableColumn>
           <TableColumn key="note" className="text-center">
             Note
           </TableColumn>
@@ -79,11 +82,12 @@ export default function AllNotice() {
           items={list.items}
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
-          emptyContent={process.env.NEXT_PUBLIC_NO_CT_ERROR}
+          emptyContent={process.env.NEXT_PUBLIC_NO_NOTICE_ERROR}
         >
           {(item) => (
             <TableRow key={item.notice_id}>
               <TableCell>{formatDate(item.time)}</TableCell>
+              <TableCell>{item.notice_creator}</TableCell>
               <TableCell>
                 <Link href={`/dashboard/allNoticeView/${item.notice_id}`}>
                   {item.notice.slice(0, 20)} &nbsp;

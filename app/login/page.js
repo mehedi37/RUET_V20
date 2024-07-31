@@ -98,7 +98,7 @@ export default function Login() {
           method="POST"
           onSubmit={formSubmit}
         >
-          <input type="hidden" name="remember" value="true" />
+          <Input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm space-y-4">
             <div>
               <label htmlFor="accountType" className="sr-only">
@@ -134,6 +134,7 @@ export default function Login() {
                   type="number"
                   autoComplete="roll"
                   required
+                  isRequired
                 />
               </div>
             )}
@@ -143,14 +144,14 @@ export default function Login() {
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>
-                <input
+                <Input
                   id="email-address"
                   name="email"
                   type="email"
+                  label="Email address"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
+                  isRequired
                 />
               </div>
             )}
@@ -167,6 +168,7 @@ export default function Login() {
                 autoComplete="current-password"
                 radius="xs"
                 required
+                isRequired
                 endContent={<EyeButton passwordID="password" />}
               />
             </div>
