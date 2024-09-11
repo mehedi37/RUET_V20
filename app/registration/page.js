@@ -37,7 +37,7 @@ export default function Registration() {
           setSubmitStatus("error");
         }
         setIsLoading(false);
-        console.log("Success:", data);
+        // console.log("Success:", data);
       })
       .catch((error) => {
         setIsLoading(false);

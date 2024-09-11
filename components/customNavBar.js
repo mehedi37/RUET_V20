@@ -94,7 +94,7 @@ export default function CustomNavBar({ payload }) {
         />
         <NavbarBrand>
           {/* <AcmeLogo /> */}
-          <p className="font-bold text-inherit">RUET v20.0</p>
+          <Link href="/dashboard"><p className="font-bold text-inherit">RUET v20.0</p></Link>
         </NavbarBrand>
       </NavbarContent>
 
