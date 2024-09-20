@@ -45,7 +45,7 @@ export default function DefaultResultTable() {
 
   return (
     <div className="min-h">
-      <h1 className="text-center p-4 text-3xl">Current Semester CT Marks</h1>
+      <h1 className="text-center p-4 text-3xl">CT Marks</h1>
       <Table
         aria-label="Current Semester CT Marks"
         classNames={{

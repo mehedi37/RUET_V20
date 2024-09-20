@@ -30,8 +30,8 @@ export default function CustomNavBar({ payload }) {
         link: "/syllabus",
       },
       {
-        name: "All Notice",
-        link: "/notices",
+        name: "Routine",
+        link: "/classRoutine",
       },
       {
         name: "Result",
@@ -94,7 +94,9 @@ export default function CustomNavBar({ payload }) {
         />
         <NavbarBrand>
           {/* <AcmeLogo /> */}
-          <Link href="/dashboard"><p className="font-bold text-inherit">RUET v20.0</p></Link>
+          <Link href="/dashboard">
+            <p className="font-bold text-inherit">RUET v20.0</p>
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 

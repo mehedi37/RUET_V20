@@ -44,7 +44,7 @@ export default function CourseSyllabus() {
 
   return (
     <div className="min-h">
-      <h1 className="text-center p-4 text-3xl">Current Semester Syllabus</h1>
+      <h1 className="text-center p-4 text-3xl">Semester Syllabus</h1>
       <Table
         aria-label="Current Semester Syllabus"
         classNames={{
@@ -75,12 +75,17 @@ export default function CourseSyllabus() {
             <TableRow key={item.course_code}>
               <TableCell>{item.course_code}</TableCell>
               <TableCell className="text-center">{item.course_name}</TableCell>
-              <TableCell className="text-center">{item.course_credit.toFixed(2)}</TableCell>
+              <TableCell className="text-center">
+                {item.course_credit.toFixed(2)}
+              </TableCell>
               <TableCell>
                 {item.syllabus ? (
                   <Link href={`/syllabus/courseSyllabus/${item.course_code}`}>
                     🔗 Link &nbsp;
-                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} size="xs" />
+                    <FontAwesomeIcon
+                      icon={faArrowUpRightFromSquare}
+                      size="xs"
+                    />
                   </Link>
                 ) : (
                   "No Syllabus Available"

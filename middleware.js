@@ -3,7 +3,7 @@ import { jwtVerify } from "jose";
 import cookie from "cookie";
 
 const publicRoutes = ["/login", "/registration"];
-const protectedRoutes = ["/dashboard", "/api/:path*", "/logout"];
+const protectedRoutes = ["/dashboard", "/api/:path*", "/logout", "/:path*"];
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
@@ -42,5 +42,11 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/api/:path*", "/login", "/registration"],
+  matcher: [
+    "/dashboard/:path*",
+    "/api/:path*",
+    "/login",
+    "/registration",
+    "/:path*",
+  ],
 };

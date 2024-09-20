@@ -5,6 +5,8 @@ import EyeButton from "@/components/eyeButton";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 
 export default function Registration() {
+  // TODO: make selection of department for teachers registration
+
   let [accountType, setAccountType] = useState("student");
   function handleAccountTypeChange(e) {
     setAccountType(e.target.value);
