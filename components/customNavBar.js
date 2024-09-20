@@ -34,8 +34,8 @@ export default function CustomNavBar({ payload }) {
         link: "/notices",
       },
       {
-        name: "Results",
-        link: "/results",
+        name: "Result",
+        link: "/result",
       },
       {
         name: "Logout",
