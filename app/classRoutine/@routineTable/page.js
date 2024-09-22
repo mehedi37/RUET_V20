@@ -97,21 +97,30 @@ export default function ClassRoutine() {
                     r.weekday === weekday.day_id &&
                     r.starting_time === time.class_time_id
                 );
-                return (
-                  <TableCell key={time.class_time_id}>
-                    {routine ? (
-                      <>
-                        <div>
-                          {routine.course_name.length > 25
-                            ? `${routine.course_name.substring(0, 25)}...`
-                            : routine.course_name}
-                        </div>
-                      </>
-                    ) : (
+                if (routine) {
+                  const colSpan =
+                    routine.ending_time - routine.starting_time + 1;
+
+                  return (
+                    <TableCell
+                      key={time.class_time_id}
+                      aria-colspan={colSpan > 1 ? colSpan : undefined}
+                      colSpan={colSpan > 1 ? colSpan : undefined}
+                    >
+                      <div>
+                        {routine.course_name.length > 25
+                          ? `${routine.course_name.substring(0, 25)}...`
+                          : routine.course_name}
+                      </div>
+                    </TableCell>
+                  );
+                } else {
+                  return (
+                    <TableCell key={time.class_time_id}>
                       <span className="text-gray-500 italic">No Class</span>
-                    )}
-                  </TableCell>
-                );
+                    </TableCell>
+                  );
+                }
               })}
             </TableRow>
           )}
