@@ -3,7 +3,7 @@ import getRollInfo from "@/lib/getRollInfo";
 import { getAllNoticeInfo, getTeacherALLNoticeInfo } from "@/lib/getNoticeInfo";
 import { NextResponse } from "next/server";
 
-export async function GET(req, res) {
+export default async function GET(req, res) {
   try {
     const payload = await DecodeToken();
     if (payload.accountType === "teacher") {

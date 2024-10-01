@@ -3,7 +3,7 @@ import getRollInfo from "@/lib/getRollInfo";
 import { getCTInfo, getTeacherCTInfo } from "@/lib/getNoticeInfo";
 import { NextResponse } from "next/server";
 
-export async function GET(req, res) {
+export default async function GET(req, res) {
   try {
     const payload = await DecodeToken();
 
