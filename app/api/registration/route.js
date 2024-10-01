@@ -2,7 +2,7 @@ import { setTeachers, setStudents } from "@/lib/setInfo";
 import { encrypt } from "@/middlewares/crypto";
 import { NextResponse } from "next/server";
 
-export async function POST(request, response) {
+export default async function POST(request, response) {
   try {
     const { accountType, name, roll, email, password } = await request.json();
 
