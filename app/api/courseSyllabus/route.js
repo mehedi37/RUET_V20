@@ -8,10 +8,7 @@ export async function GET(req, res) {
     const payload = await DecodeToken();
 
     if (!payload) {
-      return NextResponse.json(
-        { error: "Invalid token" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
     const studentInfo = await getRollInfo(payload.roll);
@@ -24,10 +21,7 @@ export async function GET(req, res) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error:', error);
-    return NextResponse.json(
-      { error: error.message },
-      { status: 500 }
-    );
+    console.error("Error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

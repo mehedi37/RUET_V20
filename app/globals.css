@@ -29,3 +29,8 @@ body {
     text-wrap: balance;
   }
 }
+
+.table-cell:hover {
+  background-color: #302440;
+  border-radius: 5px;
+}

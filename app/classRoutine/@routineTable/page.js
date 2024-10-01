@@ -100,26 +100,22 @@ export default function ClassRoutine() {
                 if (routine) {
                   const colSpan =
                     routine.ending_time - routine.starting_time + 1;
-
                   return (
                     <TableCell
                       key={time.class_time_id}
                       aria-colspan={colSpan > 1 ? colSpan : undefined}
                       colSpan={colSpan > 1 ? colSpan : undefined}
+                      className="table-cell"
                     >
-                      <div>
-                        {routine.course_name.length > 25
-                          ? `${routine.course_name.substring(0, 25)}...`
+                      <div className="text-center">
+                        {routine.course_name.length > 15
+                          ? `${routine.course_name.substring(0, 15)}...`
                           : routine.course_name}
                       </div>
                     </TableCell>
                   );
                 } else {
-                  return (
-                    <TableCell key={time.class_time_id}>
-                      <span className="text-gray-500 italic">No Class</span>
-                    </TableCell>
-                  );
+                  return <TableCell key={time.class_time_id} />;
                 }
               })}
             </TableRow>
