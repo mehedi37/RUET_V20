@@ -9,15 +9,34 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "mysql": "^2.18.1",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@nextui-org/button": "^2.0.38",
+    "@nextui-org/modal": "^2.0.41",
+    "@nextui-org/react": "^2.4.8",
+    "@nextui-org/spinner": "^2.0.34",
+    "@nextui-org/system": "^2.2.2",
+    "@nextui-org/table": "^2.0.40",
+    "@nextui-org/theme": "^2.2.6",
+    "@react-stately/data": "^3.11.4",
+    "cookie": "^0.6.0",
+    "crypto-js": "^4.2.0",
+    "framer-motion": "^11.2.11",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.10.1",
-    "next": "14.2.4",
+    "next": "^14.2.13",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/cookie": "^0.6.0",
+    "@types/crypto-js": "^4.2.2",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/react": "^18.3.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
+    "jose": "^5.4.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.1"
   }
