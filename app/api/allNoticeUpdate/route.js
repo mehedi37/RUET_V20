@@ -3,7 +3,7 @@ import getRollInfo from "@/lib/getRollInfo";
 import { getAllNoticeInfo, getTeacherALLNoticeInfo } from "@/lib/getNoticeInfo";
 import { NextResponse } from "next/server";
 
-export default async function GET(req, res) {
+export async function GET(req, res) {
   try {
     const payload = await DecodeToken();
     if (payload.accountType === "teacher") {
@@ -17,7 +17,6 @@ export default async function GET(req, res) {
     } else {
       const studentInfo = await getRollInfo(payload.roll);
       const noticeInfo = await getAllNoticeInfo(studentInfo);
-      // console.log(noticeInfo);
       return NextResponse.json(
         {
           data: noticeInfo,
@@ -26,6 +25,11 @@ export default async function GET(req, res) {
       );
     }
   } catch (error) {
-    return error.message;
+    return NextResponse.json(
+      {
+        error: error.message,
+      },
+      { status: 500 }
+    );
   }
 }

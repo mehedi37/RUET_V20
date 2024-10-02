@@ -3,7 +3,7 @@ import getRollInfo from "@/lib/getRollInfo";
 import { getCTInfo, getTeacherCTInfo } from "@/lib/getNoticeInfo";
 import { NextResponse } from "next/server";
 
-export default async function GET(req, res) {
+export async function GET(req, res) {
   try {
     const payload = await DecodeToken();
 
@@ -26,6 +26,11 @@ export default async function GET(req, res) {
       );
     }
   } catch (error) {
-    return error.message;
+    return NextResponse.json(
+      {
+        error: error.message,
+      },
+      { status: 500 }
+    );
   }
 }
