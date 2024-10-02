@@ -76,7 +76,7 @@ export default function DefaultCourseSyllabus() {
               <TableCell>{item.course_code}</TableCell>
               <TableCell className="text-center">{item.course_name}</TableCell>
               <TableCell className="text-center">
-                {item.course_credit.toFixed(2)}
+                {item.course_credit}
               </TableCell>
               <TableCell>
                 {item.syllabus ? (

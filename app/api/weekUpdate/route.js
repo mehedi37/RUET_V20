@@ -26,6 +26,7 @@ export async function GET(req, res) {
       );
     }
   } catch (error) {
+    console.error("Error fetching week update data:", error);
     return NextResponse.json(
       {
         error: error.message,
