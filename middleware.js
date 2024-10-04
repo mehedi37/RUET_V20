@@ -3,7 +3,14 @@ import { jwtVerify } from "jose";
 import cookie from "cookie";
 
 const publicRoutes = ["/login", "/registration"];
-const protectedRoutes = ["/dashboard", "/api/:path*", "/logout", "/:path*"];
+const protectedRoutes = [
+  "/dashboard",
+  "/api/:path*",
+  "/logout",
+  "/result",
+  "/classRoutine",
+  "/syllabus",
+];
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
@@ -35,7 +42,8 @@ export async function middleware(req) {
   }
 
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    const response = NextResponse.redirect(new URL("/login", req.url));
+    return response;
   }
 
   return NextResponse.next();

@@ -12,6 +12,8 @@ import {
   Button,
 } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function CustomNavBar({ payload }) {
   const pathname = usePathname();
@@ -121,6 +123,17 @@ export default function CustomNavBar({ payload }) {
             {payload.name.length > 15
               ? `${payload.name.substring(0, 15)}...`
               : payload.name}
+          </Button>
+          <Button
+            isIconOnly
+            as={Link}
+            color="danger"
+            href="/api/logout"
+            variant="light"
+            radius="full"
+            className="ml-2"
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} />
           </Button>
         </NavbarItem>
       </NavbarContent>
