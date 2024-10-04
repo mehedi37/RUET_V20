@@ -3,7 +3,7 @@ import getRollInfo from "@/lib/getRollInfo";
 import { getResultOfStudent } from "@/lib/getResult";
 import { NextResponse } from "next/server";
 
-export default async function GET(req, res) {
+export async function GET(req, res) {
   try {
     const payload = await DecodeToken();
     const studentInfo = await getRollInfo(payload.roll);
@@ -15,6 +15,11 @@ export default async function GET(req, res) {
       { status: 200 }
     );
   } catch (error) {
-    return error.message;
+    return NextResponse.json(
+      {
+        error: error.message,
+      },
+      { status: 500 }
+    );
   }
 }

@@ -17,7 +17,6 @@ export default function CustomModalSyllabus({ title, credit, syllabus }) {
     onOpen();
   }, [onOpen]);
 
-
   return (
     <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
       <ModalContent>
@@ -25,7 +24,7 @@ export default function CustomModalSyllabus({ title, credit, syllabus }) {
           <p className="text-sky-500">{title}</p>
         </ModalHeader>
         <ModalBody>
-          <p className="text-sm text-gray-500">Credit: {credit.toFixed(2)}</p>
+          <p className="text-sm text-gray-500">Credit: {credit}</p>
           <div dangerouslySetInnerHTML={{ __html: syllabus }}></div>
         </ModalBody>
         <ModalFooter>

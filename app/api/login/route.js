@@ -2,7 +2,7 @@ import { getStudent, getTeacher } from "@/lib/getInfo";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-export default async function POST(req, res) {
+export async function POST(req, res) {
   try {
     const { accountType, roll, email, password } = await req.json();
     // console.log("AccountType: ", accountType);

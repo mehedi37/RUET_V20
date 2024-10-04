@@ -3,7 +3,7 @@ import getRollInfo from "@/lib/getRollInfo";
 import { getClassRoutine } from "@/lib/getClassRoutine";
 import { NextResponse } from "next/server";
 
-export default async function GET(req, res) {
+export async function GET(req, res) {
   try {
     const payload = await DecodeToken();
     const studentInfo = await getRollInfo(payload.roll);

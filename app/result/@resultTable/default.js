@@ -89,7 +89,7 @@ export default function DefaultResultTable() {
               <TableCell>{item.course_code}</TableCell>
               <TableCell className="text-center">{item.course_name}</TableCell>
               <TableCell className="text-center">
-                {item.course_credit.toFixed(2)}
+                {item.course_credit}
               </TableCell>
               <TableCell>{item.ct_1}</TableCell>
               <TableCell>{item.ct_2}</TableCell>

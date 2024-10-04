@@ -82,7 +82,8 @@ export default function Login() {
           >
             <strong className="font-bold">
               Error! <br />
-              {loginMessage.length > 0 &&
+              {loginMessage &&
+                loginMessage.length > 0 &&
                 loginMessage.map((msg, index) => (
                   <span key={index}>
                     {msg}
