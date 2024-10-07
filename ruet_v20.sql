@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2024 at 08:07 PM
+-- Generation Time: Oct 07, 2024 at 09:37 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -51,14 +51,6 @@ CREATE TABLE `class_routine` (
   `yr_sem` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `class_routine`
---
-
-INSERT INTO `class_routine` (`routine_id`, `department`, `section`, `yr_sem`) VALUES
-(1, 3, 'A', 32),
-(2, 3, 'B', 32);
-
 -- --------------------------------------------------------
 
 --
@@ -73,17 +65,6 @@ CREATE TABLE `class_routine_details` (
   `ending_time` int(11) NOT NULL,
   `weekday` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `class_routine_details`
---
-
-INSERT INTO `class_routine_details` (`routine_details_id`, `routine_id`, `course_id`, `starting_time`, `ending_time`, `weekday`) VALUES
-(1, 1, 4, 1, 1, 1),
-(2, 1, 7, 2, 2, 1),
-(3, 1, 2, 3, 3, 1),
-(4, 1, 9, 5, 5, 1),
-(5, 1, 7, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -131,21 +112,6 @@ CREATE TABLE `courses` (
   `syllabus` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `courses`
---
-
-INSERT INTO `courses` (`course_id`, `course_code`, `course_name`, `course_teacher`, `department`, `section`, `course_credit`, `syllabus`) VALUES
-(1, 3201, 'Database Systems', 4, 3, 'A', 3.00, 'Test'),
-(2, 3205, 'Applied Statistics and Queuing Theory', 3, 3, 'A', 3.00, 'dawd'),
-(3, 3201, 'EEE', 5, 1, 'A', 3.00, 'EEE'),
-(4, 3205, 'Computer Interfacing and Embedded System', 8, 3, 'A', 3.00, NULL),
-(5, 3206, 'Computer Interfacing and Embedded System Sessional', 8, 3, 'A', 0.75, NULL),
-(6, 3202, 'Database Systems Sessional', 4, 3, 'A', 0.75, NULL),
-(7, 3203, 'Theory of Computation', 6, 3, 'A', 3.00, NULL),
-(8, 3207, 'Computer Architecture', 7, 3, 'A', 3.00, NULL),
-(9, 3208, 'Computer Architecture Sessional', 7, 3, 'A', 0.75, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -159,13 +125,6 @@ CREATE TABLE `course_advisors` (
   `section` varchar(50) NOT NULL,
   `series` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `course_advisors`
---
-
-INSERT INTO `course_advisors` (`advisor_id`, `teacher_id`, `department`, `section`, `series`) VALUES
-(2, 3, 3, 'A', 20);
 
 -- --------------------------------------------------------
 
@@ -182,13 +141,6 @@ CREATE TABLE `ct` (
   `note` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `ct`
---
-
-INSERT INTO `ct` (`ct_id`, `course_id`, `section`, `department`, `time`, `note`) VALUES
-(1, 1, 'A', 3, '2024-09-20', 'test notice');
-
 -- --------------------------------------------------------
 
 --
@@ -204,14 +156,6 @@ CREATE TABLE `ct_result` (
   `ct_3` float NOT NULL DEFAULT 0,
   `ct_4` float NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ct_result`
---
-
-INSERT INTO `ct_result` (`ct_result_id`, `course_id`, `student_roll`, `ct_1`, `ct_2`, `ct_3`, `ct_4`) VALUES
-(1, 1, 2003037, 14, 0, 0, 0),
-(2, 2, 2003037, 20, 20, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -251,7 +195,7 @@ CREATE TABLE `greetings` (
 
 INSERT INTO `greetings` (`greeting_id`, `text`, `for_teachers`) VALUES
 (1, 'কিরে ? দিনকাল ভালো ?', 0),
-(2, 'Welcome to Digital World', 1);
+(2, 'Welcome to Digital RUET', 1);
 
 -- --------------------------------------------------------
 
@@ -283,6 +227,7 @@ INSERT INTO `students` (`student_roll`, `student_name`, `student_email`, `studen
 CREATE TABLE `teachers` (
   `teacher_id` int(11) NOT NULL,
   `teacher_name` varchar(250) NOT NULL,
+  `department_id` int(11) DEFAULT NULL,
   `teacher_email` varchar(250) NOT NULL,
   `teacher_password` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -291,14 +236,15 @@ CREATE TABLE `teachers` (
 -- Dumping data for table `teachers`
 --
 
-INSERT INTO `teachers` (`teacher_id`, `teacher_name`, `teacher_email`, `teacher_password`) VALUES
-(1, 'Dr. Md. Shahid Uz Zaman', 'szaman22.ruet@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(3, 'Mohiuddin Ahmed', 'mohiuddin.nirob.mn@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(4, 'Barshon Sen', 'sen.barshon@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(5, 'Dr. Md. Selim Hossain', 'engg.selim@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(6, 'Md. Mazharul Islam', 'mazharul.islam@cse.ruet.ac.bd', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(7, 'Utsha Das', 'utsha.das@cse.ruet.ac.bd', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(8, 'Md. Nasif Osman Khansur', 'nasif.khansur@cse.ruet.ac.bd', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE=');
+INSERT INTO `teachers` (`teacher_id`, `teacher_name`, `department_id`, `teacher_email`, `teacher_password`) VALUES
+(1, 'Dr. Md. Shahid Uz Zaman', 3, 'szaman22.ruet@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
+(3, 'Mohiuddin Ahmed', 3, 'mohiuddin.nirob.mn@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
+(4, 'Barshon Sen', 3, 'sen.barshon@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
+(5, 'Dr. Md. Selim Hossain', 1, 'engg.selim@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
+(6, 'Md. Mazharul Islam', 3, 'mazharul.islam@cse.ruet.ac.bd', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
+(7, 'Utsha Das', 3, 'utsha.das@cse.ruet.ac.bd', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
+(8, 'Md. Nasif Osman Khansur', 3, 'nasif.khansur@cse.ruet.ac.bd', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
+(19, 'Md. Sozib Hossain', 3, 'sozib.hossain@cse.ruet.ac.bd', 'U2FsdGVkX1/FGy4Uu/qjdug0qIMZJwd57Qnmn9C6JUg=');
 
 -- --------------------------------------------------------
 
@@ -314,13 +260,6 @@ CREATE TABLE `teacher_notice` (
   `notice_title` varchar(250) NOT NULL,
   `notice` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `teacher_notice`
---
-
-INSERT INTO `teacher_notice` (`notice_id`, `notice_creator`, `department`, `time`, `notice_title`, `notice`) VALUES
-(1, 'Ali SIr', 3, '2024-07-06', 'দাবি উপলক্ষে ', 'কাল তোমাদের সকল দাবি মেনে নেয়া হবে ');
 
 -- --------------------------------------------------------
 
@@ -434,7 +373,9 @@ ALTER TABLE `students`
 -- Indexes for table `teachers`
 --
 ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`teacher_id`);
+  ADD PRIMARY KEY (`teacher_id`),
+  ADD UNIQUE KEY `teacher_email` (`teacher_email`),
+  ADD KEY `teacher_dept_rel` (`department_id`);
 
 --
 -- Indexes for table `teacher_notice`
@@ -469,7 +410,7 @@ ALTER TABLE `class_routine`
 -- AUTO_INCREMENT for table `class_routine_details`
 --
 ALTER TABLE `class_routine_details`
-  MODIFY `routine_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `routine_details_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `class_times`
@@ -517,7 +458,7 @@ ALTER TABLE `greetings`
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `teacher_notice`
@@ -584,6 +525,12 @@ ALTER TABLE `ct`
 ALTER TABLE `ct_result`
   ADD CONSTRAINT `ct_course_rel` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `ct_student_rel` FOREIGN KEY (`student_roll`) REFERENCES `students` (`student_roll`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD CONSTRAINT `teacher_dept_rel` FOREIGN KEY (`department_id`) REFERENCES `departments` (`department_id`);
 
 --
 -- Constraints for table `teacher_notice`
