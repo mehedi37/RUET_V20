@@ -18,6 +18,7 @@ export default function ClassRoutine() {
     classTimes: [],
     weekdays: [],
   });
+  const [noDataMessage, setNoDataMessage] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -26,6 +27,14 @@ export default function ClassRoutine() {
           `${process.env.NEXT_PUBLIC_DOMAIN}/api/classRoutine`
         );
         let json = await res.json();
+
+        if (res.status !== 200) {
+          setNoDataMessage(json.error);
+          setIsLoading(false);
+          return {
+            items: [],
+          };
+        }
 
         setData({
           classRoutine: json.data.classRoutine || [],
@@ -76,7 +85,7 @@ export default function ClassRoutine() {
           items={weekdays}
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
-          emptyContent="No class routine found"
+          emptyContent={noDataMessage}
         >
           {(weekday) => (
             <TableRow key={weekday.day_id}>

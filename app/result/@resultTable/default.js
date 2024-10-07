@@ -17,6 +17,7 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 export default function DefaultResultTable() {
   const [isLoading, setIsLoading] = useState(true);
+  const [noDataMessage, setNoDataMessage] = useState("");
 
   let list = useAsyncList({
     async load({ signal }) {
@@ -28,6 +29,14 @@ export default function DefaultResultTable() {
           }
         );
         let json = await res.json();
+
+        if (res.status !== 200) {
+          setNoDataMessage(json.error);
+          setIsLoading(false);
+          return {
+            items: [],
+          };
+        }
 
         setIsLoading(false);
         return {
@@ -82,7 +91,7 @@ export default function DefaultResultTable() {
           items={list.items}
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
-          emptyContent={process.env.NEXT_PUBLIC_NO_CT_RESULT_FOUND}
+          emptyContent={noDataMessage}
         >
           {(item) => (
             <TableRow key={item.course_code}>
