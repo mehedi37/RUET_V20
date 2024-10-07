@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+
 import {
   Table,
   TableHeader,
@@ -12,6 +13,9 @@ import {
 import { useAsyncList } from "@react-stately/data";
 import Link from "next/link";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+
 export default function DefaultWeekNotice() {
   function formatDate(dateString) {
     const options = { weekday: "short", day: "numeric", month: "short" };
@@ -19,6 +23,7 @@ export default function DefaultWeekNotice() {
   }
 
   const [isLoading, setIsLoading] = useState(true);
+  const [noDataMessage, setNoDataMessage] = useState("");
 
   let list = useAsyncList({
     async load({ signal }) {
@@ -32,8 +37,8 @@ export default function DefaultWeekNotice() {
         let json = await res.json();
 
         // Check if the response indicates no data
-        if (json.data === process.env.NO_CT_FOUND) {
-          setNoDataMessage(json.data);
+        if (res.status !== 200) {
+          setNoDataMessage(json.error);
           setIsLoading(false);
           return {
             items: [],
@@ -42,10 +47,11 @@ export default function DefaultWeekNotice() {
 
         setIsLoading(false);
         return {
-          items: json.data || [], // Ensure items is always an array
+          items: json.data || [],
         };
       } catch (error) {
         console.error("Error loading data:", error);
+        setNoDataMessage("An error occurred while loading data.");
         setIsLoading(false);
         return {
           items: [],
@@ -78,7 +84,7 @@ export default function DefaultWeekNotice() {
           items={list.items}
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
-          emptyContent={process.env.NEXT_PUBLIC_NO_CT_ERROR}
+          emptyContent={noDataMessage}
         >
           {(item) => (
             <TableRow key={item.ct_id}>
@@ -86,7 +92,8 @@ export default function DefaultWeekNotice() {
               <TableCell className="text-center">{item.course_code}</TableCell>
               <TableCell>
                 <Link href={`/dashboard/weekNoticeView/${item.ct_id}`}>
-                  {item.note.slice(0, 20)}
+                  {item.note.slice(0, 20)} &nbsp;
+                  <FontAwesomeIcon icon={faArrowUpRightFromSquare} size="xs" />
                 </Link>
               </TableCell>
             </TableRow>

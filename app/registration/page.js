@@ -1,51 +1,63 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import EyeButton from "@/components/eyeButton";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 
 export default function Registration() {
-  // TODO: make selection of department for teachers registration
-
+  // State for account type
   let [accountType, setAccountType] = useState("student");
   function handleAccountTypeChange(e) {
     setAccountType(e.target.value);
   }
 
   let [isLoading, setIsLoading] = useState(false);
-
   let [submitStatus, setSubmitStatus] = useState(null);
 
-  function formSubmit(e) {
+  let [departments, setDepartments] = useState([]);
+
+  // Fetch departments when component mounts
+  useEffect(() => {
+    async function fetchDepartments() {
+      try {
+        const response = await fetch("/api/getDeptInfo");
+        const data = await response.json();
+        setDepartments(data.data);
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+    }
+    fetchDepartments();
+  }, []);
+
+  // Form submit handler
+  async function formSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
     const form = e.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    fetch("/api/registration", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        response.json();
-      })
-      .then((data) => {
-        if (data.status === 200) {
-          setSubmitStatus("success");
-        } else {
-          setSubmitStatus("error");
-        }
-        setIsLoading(false);
-        // console.log("Success:", data);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.error("Error:", error);
-        setSubmitStatus("error");
+    try {
+      const response = await fetch("/api/registration", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+      const result = await response.json();
+      if (response.status === 200) {
+        setSubmitStatus("success");
+      } else {
+        console.error("Error:", result.error);
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -120,6 +132,7 @@ export default function Registration() {
                 />
               </div>
 
+              {/* Student part start */}
               {accountType === "student" && (
                 <div>
                   <label htmlFor="roll" className="sr-only">
@@ -135,6 +148,30 @@ export default function Registration() {
                     required
                     isRequired
                   />
+                </div>
+              )}
+
+              {/* Teacher part for department */}
+              {accountType === "teacher" && (
+                <div>
+                  <label htmlFor="department" className="sr-only">
+                    Department
+                  </label>
+                  <Select
+                    id="department"
+                    name="department"
+                    label="Select a department"
+                    className="max-w"
+                  >
+                    {departments.map((dept) => (
+                      <SelectItem
+                        value={dept.department_id}
+                        key={dept.department_id}
+                      >
+                        {dept.dept_name}
+                      </SelectItem>
+                    ))}
+                  </Select>
                 </div>
               )}
 

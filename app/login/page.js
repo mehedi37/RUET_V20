@@ -42,7 +42,7 @@ export default function Login() {
         setTimeout(() => {
           setLoginStatus(null);
           setLoginMessage(null);
-        }, 5000);
+        }, 10000);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -51,7 +51,7 @@ export default function Login() {
         setTimeout(() => {
           setLoginStatus(null);
           setLoginMessage(null);
-        }, 5000);
+        }, 10000);
       });
   }
 

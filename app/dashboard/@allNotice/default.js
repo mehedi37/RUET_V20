@@ -23,6 +23,7 @@ export default function DefaultAllNotice() {
   }
 
   const [isLoading, setIsLoading] = useState(true);
+  const [noDataMessage, setNoDataMessage] = useState("");
 
   let list = useAsyncList({
     async load({ signal }) {
@@ -36,8 +37,8 @@ export default function DefaultAllNotice() {
         let json = await res.json();
 
         // Check if the response indicates no data
-        if (json.data === process.env.NO_CT_FOUND) {
-          setNoDataMessage(json.data);
+        if (res.status !== 200) {
+          setNoDataMessage(json.error);
           setIsLoading(false);
           return {
             items: [],
@@ -82,7 +83,7 @@ export default function DefaultAllNotice() {
           items={list.items}
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
-          emptyContent={process.env.NEXT_PUBLIC_NO_NOTICE_ERROR}
+          emptyContent={noDataMessage}
         >
           {(item) => (
             <TableRow key={item.notice_id}>

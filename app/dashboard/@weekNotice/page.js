@@ -23,6 +23,7 @@ export default function WeekNotice() {
   }
 
   const [isLoading, setIsLoading] = useState(true);
+  const [noDataMessage, setNoDataMessage] = useState("");
 
   let list = useAsyncList({
     async load({ signal }) {
@@ -36,8 +37,8 @@ export default function WeekNotice() {
         let json = await res.json();
 
         // Check if the response indicates no data
-        if (json.data === process.env.NO_CT_FOUND) {
-          setNoDataMessage(json.data);
+        if (res.status !== 200) {
+          setNoDataMessage(json.error);
           setIsLoading(false);
           return {
             items: [],
@@ -46,10 +47,11 @@ export default function WeekNotice() {
 
         setIsLoading(false);
         return {
-          items: json.data || [], // Ensure items is always an array
+          items: json.data || [],
         };
       } catch (error) {
         console.error("Error loading data:", error);
+        setNoDataMessage("An error occurred while loading data.");
         setIsLoading(false);
         return {
           items: [],
@@ -82,7 +84,7 @@ export default function WeekNotice() {
           items={list.items}
           isLoading={isLoading}
           loadingContent={<Spinner label="Loading..." />}
-          emptyContent={process.env.NEXT_PUBLIC_NO_CT_ERROR}
+          emptyContent={noDataMessage}
         >
           {(item) => (
             <TableRow key={item.ct_id}>
