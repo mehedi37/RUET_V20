@@ -1,30 +1,30 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   useDisclosure,
+  Chip,
 } from "@nextui-org/react";
-
 import ModalTabs from "@/components/addNoticeModal/modalTabs";
 
 const noticeConfigs = {
   ctNotice: {
     fields: [
-      { name: "course_id", label: "Course ID", type: "number", required: true },
+      { name: "course_id", label: "Course ID", type: "select", required: true },
       { name: "section", label: "Section", type: "text", required: true },
       {
         name: "department",
         label: "Department",
-        type: "number",
+        type: "select",
         required: true,
       },
-      { name: "CT Date", label: "Time", type: "date", required: true },
+      { name: "time", label: "Time", type: "date", required: true },
       { name: "note", label: "Note", type: "textarea", required: true },
     ],
-    handleSubmit: (event) => {
+    handleSubmit: async (event, setMessage) => {
       event.preventDefault();
       const noticeData = {
         course_id: event.target.course_id.value,
@@ -33,8 +33,29 @@ const noticeConfigs = {
         time: event.target.time.value,
         note: event.target.note.value,
       };
-      // Add logic to save CT notice to the database
-      console.log("CT Notice:", noticeData);
+      try {
+        const response = await fetch("/api/addNotice", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ type: "ctNotice", data: noticeData }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          setMessage({
+            type: "error",
+            text: "Error: " + errorData.message,
+          });
+          return;
+        }
+
+        const result = await response.json();
+        setMessage({ type: "success", text: result.message });
+      } catch (error) {
+        setMessage({ type: "error", text: "Error: " + error.message });
+      }
     },
   },
   studentNotice: {
@@ -43,7 +64,7 @@ const noticeConfigs = {
         name: "notice_creator",
         label: "Notice Creator",
         type: "text",
-        required: true,
+        required: false,
       },
       {
         name: "notice_title",
@@ -53,16 +74,28 @@ const noticeConfigs = {
       },
       { name: "notice", label: "Notice", type: "textarea", required: true },
       { name: "time", label: "Time", type: "date", required: true },
-      { name: "series", label: "Series", type: "number", required: true },
-      { name: "section", label: "Section", type: "text", required: true },
+      {
+        name: "series",
+        label: "Series",
+        type: "number",
+        placeholder: "20 or 21 or 22 ...",
+        required: true,
+      },
+      {
+        name: "section",
+        label: "Section",
+        type: "text",
+        placeholder: "A or B or C ...",
+        required: true,
+      },
       {
         name: "department",
         label: "Department",
-        type: "number",
+        type: "select",
         required: true,
       },
     ],
-    handleSubmit: (event) => {
+    handleSubmit: async (event, setMessage) => {
       event.preventDefault();
       const noticeData = {
         notice_creator: event.target.notice_creator.value,
@@ -73,8 +106,28 @@ const noticeConfigs = {
         section: event.target.section.value,
         department: event.target.department.value,
       };
-      // Add logic to save student notice to the database
-      console.log("Student Notice:", noticeData);
+      try {
+        const response = await fetch("/api/addNotice", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ type: "studentNotice", data: noticeData }),
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          setMessage({
+            type: "error",
+            text: "Error: " + errorData.message,
+          });
+          return;
+        }
+
+        const result = await response.json();
+        setMessage({ type: "success", text: result.message });
+      } catch (error) {
+        setMessage({ type: "error", text: "Error: " + error.message });
+      }
     },
   },
   teachersNotice: {
@@ -83,12 +136,12 @@ const noticeConfigs = {
         name: "notice_creator",
         label: "Notice Creator",
         type: "text",
-        required: true,
+        required: false,
       },
       {
         name: "department",
         label: "Department",
-        type: "number",
+        type: "select",
         required: true,
       },
       { name: "time", label: "Time", type: "date", required: true },
@@ -100,7 +153,7 @@ const noticeConfigs = {
       },
       { name: "notice", label: "Notice", type: "textarea", required: true },
     ],
-    handleSubmit: (event) => {
+    handleSubmit: async (event, setMessage) => {
       event.preventDefault();
       const noticeData = {
         notice_creator: event.target.notice_creator.value,
@@ -109,27 +162,75 @@ const noticeConfigs = {
         notice_title: event.target.notice_title.value,
         notice: event.target.notice.value,
       };
-      // Add logic to save teachers notice to the database
-      console.log("Teachers Notice:", noticeData);
+      try {
+        const response = await fetch("/api/addNotice", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ type: "teacherNotice", data: noticeData }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          setMessage({
+            type: "error",
+            text: "Error: " + errorData.message,
+          });
+          return;
+        }
+
+        const result = await response.json();
+        setMessage({ type: "success", text: result.message });
+      } catch (error) {
+        setMessage({ type: "error", text: "Error: " + error.message });
+      }
     },
   },
 };
 
-export default function AddNoticeModal({ title }) {
+export default function AddNoticeModal({
+  title,
+  courses,
+  departments,
+  notice_creator,
+  notice_creator_name,
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     onOpen();
   }, [onOpen]);
 
   return (
-    <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
+    <Modal
+      backdrop="blur"
+      isOpen={isOpen}
+      onClose={onClose}
+      isDismissable={false}
+    >
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1 items-center">
           <p className="text-sky-500">{title}</p>
         </ModalHeader>
         <ModalBody>
-          <ModalTabs noticeConfigs={noticeConfigs} />
+          {message && (
+            <Chip
+              className="mb-4 p-2 text-center"
+              color={message.type === "success" ? "success" : "danger"}
+            >
+              {message.text}
+            </Chip>
+          )}
+          <ModalTabs
+            noticeConfigs={noticeConfigs}
+            setMessage={setMessage}
+            courses={courses}
+            departments={departments}
+            notice_creator={notice_creator}
+            notice_creator_name={notice_creator_name}
+          />
         </ModalBody>
       </ModalContent>
     </Modal>

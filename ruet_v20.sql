@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2024 at 09:37 PM
+-- Generation Time: Oct 08, 2024 at 01:29 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -32,11 +32,18 @@ CREATE TABLE `all_notice` (
   `notice_creator` varchar(250) NOT NULL,
   `notice_title` varchar(250) NOT NULL,
   `notice` longtext NOT NULL,
-  `time` date NOT NULL DEFAULT current_timestamp(),
+  `time` datetime NOT NULL DEFAULT current_timestamp(),
   `series` int(11) NOT NULL DEFAULT 0,
   `section` varchar(50) NOT NULL DEFAULT '""',
   `department` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `all_notice`
+--
+
+INSERT INTO `all_notice` (`notice_id`, `notice_creator`, `notice_title`, `notice`, `time`, `series`, `section`, `department`) VALUES
+(1, 'Md. Sozib Hossain', 'test', 'hello everyone', '2024-10-09 00:00:00', 20, 'A', 3);
 
 -- --------------------------------------------------------
 
@@ -112,6 +119,14 @@ CREATE TABLE `courses` (
   `syllabus` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`course_id`, `course_code`, `course_name`, `course_teacher`, `department`, `section`, `course_credit`, `syllabus`) VALUES
+(10, 3201, 'Database Management System', 4, 3, 'A', 3.00, 'Test'),
+(11, 3205, 'Theory of computation', 19, 3, 'A', 3.00, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -137,9 +152,18 @@ CREATE TABLE `ct` (
   `course_id` int(11) NOT NULL,
   `section` varchar(50) NOT NULL,
   `department` int(11) NOT NULL,
-  `time` date NOT NULL,
+  `time` datetime NOT NULL,
   `note` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ct`
+--
+
+INSERT INTO `ct` (`ct_id`, `course_id`, `section`, `department`, `time`, `note`) VALUES
+(9, 10, 'A', 3, '2024-10-09 00:00:00', 'Test'),
+(38, 10, 'A', 3, '2024-10-09 00:00:00', 'Test\n'),
+(40, 11, 'A', 3, '2024-10-09 08:00:22', 'surprise test');
 
 -- --------------------------------------------------------
 
@@ -256,10 +280,17 @@ CREATE TABLE `teacher_notice` (
   `notice_id` int(11) NOT NULL,
   `notice_creator` varchar(250) NOT NULL,
   `department` int(11) NOT NULL,
-  `time` date NOT NULL DEFAULT current_timestamp(),
+  `time` datetime NOT NULL DEFAULT current_timestamp(),
   `notice_title` varchar(250) NOT NULL,
   `notice` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teacher_notice`
+--
+
+INSERT INTO `teacher_notice` (`notice_id`, `notice_creator`, `department`, `time`, `notice_title`, `notice`) VALUES
+(2, 'Md. Sozib Hossain', 3, '2024-10-09 00:00:00', 'test', 'test teachers notice');
 
 -- --------------------------------------------------------
 
@@ -398,7 +429,7 @@ ALTER TABLE `weekday`
 -- AUTO_INCREMENT for table `all_notice`
 --
 ALTER TABLE `all_notice`
-  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `class_routine`
@@ -422,7 +453,7 @@ ALTER TABLE `class_times`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `course_advisors`
@@ -434,7 +465,7 @@ ALTER TABLE `course_advisors`
 -- AUTO_INCREMENT for table `ct`
 --
 ALTER TABLE `ct`
-  MODIFY `ct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `ct_result`
@@ -464,7 +495,7 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `teacher_notice`
 --
 ALTER TABLE `teacher_notice`
-  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `weekday`
