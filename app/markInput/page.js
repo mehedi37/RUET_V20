@@ -139,9 +139,10 @@ export default function MarkInput() {
           items={filteredCourses}
           onInputChange={course.setFilterText}
           onSelectionChange={(key) => {
-            const selectedItem = course.items.find(
-              (item) => item.course_id === key
-            );
+            const selectedItem = course.items.find((item) => {
+              item.course_id === key;
+              return item;
+            });
             setSelectedCourse(selectedItem);
           }}
           startContent={
