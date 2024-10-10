@@ -13,7 +13,19 @@ export default function MarkInput() {
   const [section, setSection] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [filteredCourses, setFilteredCourses] = useState([]);
+
+  let course = useAsyncList({
+    async load({ signal, filterText }) {
+      let res = await fetch(`/api/getCourseInfo/?search=${filterText}`, {
+        signal,
+      });
+      let json = await res.json();
+
+      return {
+        items: json.data,
+      };
+    },
+  });
 
   let department = useAsyncList({
     async load({ signal, filterText }) {
@@ -28,27 +40,18 @@ export default function MarkInput() {
     },
   });
 
-  const loadCourses = async (departmentId) => {
-    let res = await fetch(`/api/getCourseInfo/?department=${departmentId}`);
-    let json = await res.json();
-    setFilteredCourses(json.data);
-  };
-
   const handleSearch = async (e) => {
     e.preventDefault();
 
     if (selectedDepartment && selectedCourse && section) {
-      const departmentId = selectedDepartment.department_id;
-      const courseId = selectedCourse.course_id;
-
       let res = await fetch("/api/searchCTResult", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          department: departmentId,
-          course_id: courseId,
+          department: selectedDepartment,
+          course_id: selectedCourse,
           section: section,
         }),
       });
@@ -75,9 +78,6 @@ export default function MarkInput() {
               (item) => item.department_id === key
             );
             setSelectedDepartment(selectedItem);
-            setSelectedCourse(null);
-            setFilteredCourses([]);
-            loadCourses(selectedItem);
           }}
           startContent={
             <SearchIcon className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
@@ -94,18 +94,15 @@ export default function MarkInput() {
         </Autocomplete>
 
         <Autocomplete
-          isDisabled={selectedDepartment == null}
           isRequired
           label="Course"
           placeholder="3201"
-          inputValue={
-            selectedCourse ? selectedCourse.course_code.toString() : ""
-          }
-          isLoading={false}
-          items={filteredCourses}
-          onInputChange={filteredCourses.filterText}
+          inputValue={course.filterText}
+          isLoading={course.isLoading}
+          items={course.items}
+          onInputChange={course.setFilterText}
           onSelectionChange={(key) => {
-            const selectedItem = filteredCourses.find(
+            const selectedItem = course.items.find(
               (item) => item.course_id === key
             );
             setSelectedCourse(selectedItem);
