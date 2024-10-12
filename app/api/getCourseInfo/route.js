@@ -1,4 +1,4 @@
-import { getDepartments } from "@/lib/getInfo";
+import { getAllCourse } from "@/lib/getInfo";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
@@ -6,17 +6,17 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get("search") || "";
 
-    const allDepartments = await getDepartments();
+    const courses = await getAllCourse();
 
-    const filteredDepartments = allDepartments.filter(
-      (department) =>
-        department.dept_name.toLowerCase().includes(search.toLowerCase()) ||
-        department.dept_short_name.toLowerCase().includes(search.toLowerCase())
+    const filteredCourses = courses.filter(
+      (courses) =>
+        courses.course_code.toString().includes(search.toString()) ||
+        courses.course_name.toLowerCase().includes(search.toLowerCase())
     );
 
     return NextResponse.json(
       {
-        data: filteredDepartments,
+        data: filteredCourses,
       },
       { status: 200 }
     );

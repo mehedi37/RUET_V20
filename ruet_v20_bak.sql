@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2024 at 06:14 PM
+-- Generation Time: Oct 08, 2024 at 01:29 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -130,25 +130,6 @@ INSERT INTO `courses` (`course_id`, `course_code`, `course_name`, `course_teache
 -- --------------------------------------------------------
 
 --
--- Table structure for table `courses_teacher_relationship`
---
-
-CREATE TABLE `courses_teacher_relationship` (
-  `course_id` int(11) NOT NULL,
-  `teacher_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `courses_teacher_relationship`
---
-
-INSERT INTO `courses_teacher_relationship` (`course_id`, `teacher_id`) VALUES
-(11, 6),
-(11, 19);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `course_advisors`
 --
 
@@ -182,10 +163,7 @@ CREATE TABLE `ct` (
 INSERT INTO `ct` (`ct_id`, `course_id`, `section`, `department`, `time`, `note`) VALUES
 (9, 10, 'A', 3, '2024-10-09 00:00:00', 'Test'),
 (38, 10, 'A', 3, '2024-10-09 00:00:00', 'Test\n'),
-(40, 11, 'A', 3, '2024-10-09 08:00:22', 'surprise test'),
-(41, 11, 'A', 3, '2024-10-09 08:00:03', 'test'),
-(42, 11, 'A', 3, '2024-10-09 08:00:20', 'Surprise test'),
-(43, 11, 'A', 3, '2024-10-12 15:48:25', 'fafaw');
+(40, 11, 'A', 3, '2024-10-09 08:00:22', 'surprise test');
 
 -- --------------------------------------------------------
 
@@ -202,14 +180,6 @@ CREATE TABLE `ct_result` (
   `ct_3` float NOT NULL DEFAULT 0,
   `ct_4` float NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ct_result`
---
-
-INSERT INTO `ct_result` (`ct_result_id`, `course_id`, `student_roll`, `ct_1`, `ct_2`, `ct_3`, `ct_4`) VALUES
-(3, 10, 2003037, 14, 18, 0, 16),
-(4, 11, 2003037, 14, 16, 20, 18);
 
 -- --------------------------------------------------------
 
@@ -270,8 +240,7 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`student_roll`, `student_name`, `student_email`, `student_password`) VALUES
 (2003009, 'Sadia Rahman Sharna', 'sadiasharna3@gmail.com', 'U2FsdGVkX1/moxCOPPI0EcUWnQmtcb+qQ0xT9kanHVY='),
-(2003037, 'Mehedi Hasan', 'mjmehedihasanoo7@gmail.com', 'U2FsdGVkX1/moxCOPPI0EcUWnQmtcb+qQ0xT9kanHVY='),
-(2003091, 'Sadia Sharna Test', 'sadiasharna2@gmail.com', 'U2FsdGVkX19Jwg4TEDPPs9ypfHj6MhXJsfWbxRQqqFE=');
+(2003037, 'Mehedi Hasan', 'mjmehedihasanoo7@gmail.com', 'U2FsdGVkX1/moxCOPPI0EcUWnQmtcb+qQ0xT9kanHVY=');
 
 -- --------------------------------------------------------
 
@@ -389,13 +358,6 @@ ALTER TABLE `courses`
   ADD KEY `dept` (`department`);
 
 --
--- Indexes for table `courses_teacher_relationship`
---
-ALTER TABLE `courses_teacher_relationship`
-  ADD KEY `course_rel` (`course_id`),
-  ADD KEY `teacher_rel` (`teacher_id`);
-
---
 -- Indexes for table `course_advisors`
 --
 ALTER TABLE `course_advisors`
@@ -491,7 +453,7 @@ ALTER TABLE `class_times`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `course_advisors`
@@ -503,13 +465,13 @@ ALTER TABLE `course_advisors`
 -- AUTO_INCREMENT for table `ct`
 --
 ALTER TABLE `ct`
-  MODIFY `ct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `ct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `ct_result`
 --
 ALTER TABLE `ct_result`
-  MODIFY `ct_result_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ct_result_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -573,13 +535,6 @@ ALTER TABLE `class_routine_details`
 ALTER TABLE `courses`
   ADD CONSTRAINT `dept` FOREIGN KEY (`department`) REFERENCES `departments` (`department_id`),
   ADD CONSTRAINT `teacher` FOREIGN KEY (`course_teacher`) REFERENCES `teachers` (`teacher_id`);
-
---
--- Constraints for table `courses_teacher_relationship`
---
-ALTER TABLE `courses_teacher_relationship`
-  ADD CONSTRAINT `course_rel` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `teacher_rel` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `course_advisors`

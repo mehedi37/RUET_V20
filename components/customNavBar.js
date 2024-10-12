@@ -50,18 +50,18 @@ export default function CustomNavBar({ payload }) {
         name: "Dashboard",
         link: "/dashboard",
       },
-      {
-        name: "Notice",
-        link: "/notice",
-      },
+      // {
+      //   name: "Notice",
+      //   link: "/notice",
+      // },
       {
         name: "Mark Input",
         link: "/markInput",
       },
-      {
-        name: "Classes",
-        link: "/classes",
-      },
+      // {
+      //   name: "Classes",
+      //   link: "/classes",
+      // },
       {
         name: "Logout",
         link: "/logout",
