@@ -4,6 +4,10 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const { department, course_id, section } = await req.json();
+    // console.log("department: ", department);
+    // console.log("course_id: ", course_id);
+    // console.log("section: ", section);
+    // console.log();
 
     if (!department || !course_id || !section) {
       return NextResponse.json(

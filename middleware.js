@@ -10,6 +10,7 @@ const protectedRoutes = [
   "/result",
   "/classRoutine",
   "/syllabus",
+  "/markInput",
 ];
 
 export async function middleware(req) {
