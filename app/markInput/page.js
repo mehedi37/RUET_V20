@@ -54,6 +54,33 @@ export default function MarkInput() {
     }
   }, [selectedDepartment, course.items]);
 
+  const fetchRows = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/searchCTResult", {
+        method: "POST",
+        body: JSON.stringify({
+          department: selectedDepartment.department_id,
+          course_id: selectedCourse.course_code,
+          section: section,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      if (response.status === 200) {
+        setRows(result.data);
+      } else {
+        console.error("Error:", result.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   async function formSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -68,35 +95,8 @@ export default function MarkInput() {
       return;
     }
 
-    const form = e.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    data.department = selectedDepartment.department_id;
-    data.course_id = selectedCourse.course_id;
-    data.section = section;
-
-    try {
-      const response = await fetch("/api/searchCTResult", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const result = await response.json();
-      if (response.status === 200) {
-        setSubmitStatus("success");
-        setRows(result.data);
-      } else {
-        console.error("Error:", result.error);
-        setSubmitStatus("error");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setSubmitStatus("error");
-    } finally {
-      setIsLoading(false);
-    }
+    await fetchRows();
+    setSubmitStatus("success");
   }
 
   return (
@@ -150,8 +150,6 @@ export default function MarkInput() {
               const selectedItem = course.items.find(
                 (item) => item.course_id === parseInt(key)
               );
-              console.log("Selected Course: ", selectedItem);
-              console.log("Filter text: ", course.filterText);
               setSelectedCourse(selectedItem);
             }}
             startContent={
@@ -195,7 +193,24 @@ export default function MarkInput() {
         </div>
 
         <div className="flex justify-center mt-4 w-full">
+          {submitStatus === "success" && (
+            <Button
+              color="danger"
+              className="mr-2"
+              variant="flat"
+              onClick={() => {
+                setSubmitStatus("");
+                setSelectedCourse(null);
+                setSelectedDepartment(null);
+                setSection("");
+                setRows([]);
+              }}
+            >
+              Clear
+            </Button>
+          )}
           <Button
+            isDisabled={submitStatus === "success"}
             type="submit"
             color="warning"
             variant="flat"
@@ -206,7 +221,13 @@ export default function MarkInput() {
         </div>
       </form>
 
-      {submitStatus === "success" && <MarksPartial rows={rows} />}
+      {submitStatus === "success" && (
+        <MarksPartial
+          rows={rows}
+          course_id={selectedCourse?.course_id}
+          fetchRows={fetchRows}
+        />
+      )}
     </>
   );
 }
