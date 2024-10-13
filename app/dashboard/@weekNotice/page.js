@@ -52,6 +52,10 @@ export default function WeekNotice() {
         };
       } catch (error) {
         console.error("Error loading data Catch:", error.message);
+        console.error(
+          "Error loading data Catch:",
+          process.env.NEXT_PUBLIC_NO_CT_ERROR
+        );
         setNoDataMessage(`ERROR: ${error.message}`);
         setIsLoading(false);
         return {
