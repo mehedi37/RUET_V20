@@ -21,12 +21,9 @@ export default function DefaultCourseSyllabus() {
   let list = useAsyncList({
     async load({ signal }) {
       try {
-        let res = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN}/api/courseSyllabus`,
-          {
-            signal,
-          }
-        );
+        let res = await fetch(`/api/courseSyllabus`, {
+          signal,
+        });
         let json = await res.json();
 
         if (res.status !== 200) {

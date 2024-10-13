@@ -22,12 +22,9 @@ export default function ResultTable() {
   let list = useAsyncList({
     async load({ signal }) {
       try {
-        let res = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN}/api/ctResult`,
-          {
-            signal,
-          }
-        );
+        let res = await fetch(`/api/ctResult`, {
+          signal,
+        });
         let json = await res.json();
 
         if (res.status !== 200) {
