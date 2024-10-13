@@ -1,4 +1,4 @@
-import { createPool } from 'mysql2';
+import { createPool } from "mysql2";
 
 const pool = createPool({
   host: process.env.DB_HOST,
@@ -8,7 +8,7 @@ const pool = createPool({
 });
 
 pool.getConnection((err, connection) => {
-  if(err) {
+  if (err) {
     console.error("An error occurred while connecting to the database:", err);
   } else {
     console.log("Successfully connected to the database.");

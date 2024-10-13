@@ -145,10 +145,17 @@ export function MarksPartial({ rows, course_id, fetchRows }) {
       {message && (
         <div className="flex justify-center mt-4">
           <Chip
-            className="m-2"
+            className="mb-2"
             color={message.includes("Error") ? "danger" : "success"}
-            variant="bordered"
+            variant="flat"
             size="lg"
+            startContent={
+              message.includes("Error") ? (
+                <FontAwesomeIcon icon={faCircleXmark} />
+              ) : (
+                <FontAwesomeIcon icon={faCircleCheck} />
+              )
+            }
           >
             {message}
           </Chip>
