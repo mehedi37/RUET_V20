@@ -38,6 +38,7 @@ export default function WeekNotice() {
 
         // Check if the response indicates no data
         if (res.status !== 200) {
+          console.error("Error loading data Try:", json.error);
           setNoDataMessage(json.error);
           setIsLoading(false);
           return {
@@ -50,7 +51,7 @@ export default function WeekNotice() {
           items: json.data || [],
         };
       } catch (error) {
-        console.error("Error loading data:", error);
+        console.error("Error loading data Catch:", error.message);
         setNoDataMessage(`ERROR: ${error.message}`);
         setIsLoading(false);
         return {
