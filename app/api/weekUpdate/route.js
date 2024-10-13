@@ -27,7 +27,6 @@ export async function GET(req, res) {
     }
   } catch (error) {
     console.error("Error fetching week update data:", error);
-    console.error("Error message API:", error.message);
     return NextResponse.json(
       {
         error: error.message,

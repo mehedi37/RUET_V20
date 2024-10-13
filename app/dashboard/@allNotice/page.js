@@ -51,6 +51,7 @@ export default function AllNotice() {
         };
       } catch (error) {
         console.error("Error loading data:", error);
+        setNoDataMessage(`ERROR: ${error.message}`);
         setIsLoading(false);
         return {
           items: [],
