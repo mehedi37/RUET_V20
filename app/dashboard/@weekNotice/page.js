@@ -51,7 +51,7 @@ export default function WeekNotice() {
         };
       } catch (error) {
         console.error("Error loading data:", error);
-        setNoDataMessage("An error occurred while loading data.");
+        setNoDataMessage(`ERROR: ${error.message}`);
         setIsLoading(false);
         return {
           items: [],

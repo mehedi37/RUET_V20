@@ -8,7 +8,6 @@ export function encrypt(data) {
 }
 
 export function decrypt(encryptedData) {
-  console.log("Secret key: ", secretKey);
   const bytes = AES.decrypt(encryptedData, secretKey);
   const decryptedData = bytes.toString(enc.Utf8);
   return decryptedData;
