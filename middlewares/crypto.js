@@ -12,11 +12,3 @@ export function decrypt(encryptedData) {
   const decryptedData = bytes.toString(enc.Utf8);
   return decryptedData;
 }
-
-// export function testEncryptionDecryption(testData) {
-//   // const testData = "devMeek007";
-//   const encryptedData = encrypt(testData);
-//   console.log("Encrypted: ", encryptedData);
-//   const decryptedData = decrypt(encryptedData);
-//   console.log("Decrypted: ", decryptedData);
-// }

@@ -39,10 +39,6 @@ export default function CustomNavBar({ payload }) {
         name: "Result",
         link: "/result",
       },
-      {
-        name: "Logout",
-        link: "/logout",
-      },
     ];
   } else {
     menuItems = [
@@ -62,10 +58,6 @@ export default function CustomNavBar({ payload }) {
       //   name: "Classes",
       //   link: "/classes",
       // },
-      {
-        name: "Logout",
-        link: "/logout",
-      },
     ];
   }
 
@@ -103,7 +95,7 @@ export default function CustomNavBar({ payload }) {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {menuItems.slice(0, menuItems.length - 1).map((item, index) => (
+        {menuItems.map((item, index) => (
           <NavbarItem
             key={`${item}-${index}`}
             isActive={pathname === item.link}

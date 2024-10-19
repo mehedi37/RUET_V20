@@ -28,12 +28,9 @@ export default function AllNotice() {
   let list = useAsyncList({
     async load({ signal }) {
       try {
-        let res = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN}/api/allNoticeUpdate`,
-          {
-            signal,
-          }
-        );
+        let res = await fetch(`/api/allNoticeUpdate`, {
+          signal,
+        });
         let json = await res.json();
 
         // Check if the response indicates no data
@@ -51,6 +48,7 @@ export default function AllNotice() {
         };
       } catch (error) {
         console.error("Error loading data:", error);
+        setNoDataMessage(`ERROR: ${error.message}`);
         setIsLoading(false);
         return {
           items: [],

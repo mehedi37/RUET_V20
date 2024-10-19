@@ -28,12 +28,9 @@ export default function DefaultWeekNotice() {
   let list = useAsyncList({
     async load({ signal }) {
       try {
-        let res = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN}/api/weekUpdate`,
-          {
-            signal,
-          }
-        );
+        let res = await fetch(`/api/weekUpdate`, {
+          signal,
+        });
         let json = await res.json();
 
         // Check if the response indicates no data
@@ -51,7 +48,7 @@ export default function DefaultWeekNotice() {
         };
       } catch (error) {
         console.error("Error loading data:", error);
-        setNoDataMessage("An error occurred while loading data.");
+        setNoDataMessage(`ERROR: ${error.message}`);
         setIsLoading(false);
         return {
           items: [],

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2024 at 06:14 PM
+-- Generation Time: Oct 12, 2024 at 11:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -43,7 +43,8 @@ CREATE TABLE `all_notice` (
 --
 
 INSERT INTO `all_notice` (`notice_id`, `notice_creator`, `notice_title`, `notice`, `time`, `series`, `section`, `department`) VALUES
-(1, 'Md. Sozib Hossain', 'test', 'hello everyone', '2024-10-09 00:00:00', 20, 'A', 3);
+(1, 'Md. Sozib Hossain', 'test', 'hello everyone', '2024-10-09 00:00:00', 20, 'A', 3),
+(3, 'Md. Sozib Hossain', 'test', 'dawdawd', '2024-10-13 02:24:48', 20, 'A', 3);
 
 -- --------------------------------------------------------
 
@@ -57,6 +58,13 @@ CREATE TABLE `class_routine` (
   `section` varchar(10) NOT NULL,
   `yr_sem` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `class_routine`
+--
+
+INSERT INTO `class_routine` (`routine_id`, `department`, `section`, `yr_sem`) VALUES
+(3, 3, 'A', 32);
 
 -- --------------------------------------------------------
 
@@ -72,6 +80,14 @@ CREATE TABLE `class_routine_details` (
   `ending_time` int(11) NOT NULL,
   `weekday` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `class_routine_details`
+--
+
+INSERT INTO `class_routine_details` (`routine_details_id`, `routine_id`, `course_id`, `starting_time`, `ending_time`, `weekday`) VALUES
+(1, 3, 14, 1, 2, 1),
+(2, 3, 13, 2, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -112,7 +128,6 @@ CREATE TABLE `courses` (
   `course_id` int(11) NOT NULL,
   `course_code` int(11) NOT NULL,
   `course_name` varchar(250) NOT NULL,
-  `course_teacher` int(11) NOT NULL,
   `department` int(11) NOT NULL,
   `section` varchar(50) NOT NULL,
   `course_credit` decimal(3,2) NOT NULL,
@@ -123,9 +138,9 @@ CREATE TABLE `courses` (
 -- Dumping data for table `courses`
 --
 
-INSERT INTO `courses` (`course_id`, `course_code`, `course_name`, `course_teacher`, `department`, `section`, `course_credit`, `syllabus`) VALUES
-(10, 3201, 'Database Management System', 4, 3, 'A', 3.00, 'Test'),
-(11, 3205, 'Theory of computation', 19, 3, 'A', 3.00, NULL);
+INSERT INTO `courses` (`course_id`, `course_code`, `course_name`, `department`, `section`, `course_credit`, `syllabus`) VALUES
+(13, 3205, 'Theory of computation', 3, 'A', 3.00, NULL),
+(14, 3201, 'Database System', 3, 'A', 3.00, NULL);
 
 -- --------------------------------------------------------
 
@@ -143,8 +158,9 @@ CREATE TABLE `courses_teacher_relationship` (
 --
 
 INSERT INTO `courses_teacher_relationship` (`course_id`, `teacher_id`) VALUES
-(11, 6),
-(11, 19);
+(13, 6),
+(13, 19),
+(14, 4);
 
 -- --------------------------------------------------------
 
@@ -180,12 +196,8 @@ CREATE TABLE `ct` (
 --
 
 INSERT INTO `ct` (`ct_id`, `course_id`, `section`, `department`, `time`, `note`) VALUES
-(9, 10, 'A', 3, '2024-10-09 00:00:00', 'Test'),
-(38, 10, 'A', 3, '2024-10-09 00:00:00', 'Test\n'),
-(40, 11, 'A', 3, '2024-10-09 08:00:22', 'surprise test'),
-(41, 11, 'A', 3, '2024-10-09 08:00:03', 'test'),
-(42, 11, 'A', 3, '2024-10-09 08:00:20', 'Surprise test'),
-(43, 11, 'A', 3, '2024-10-12 15:48:25', 'fafaw');
+(44, 13, 'A', 3, '2024-10-13 08:00:33', 'test'),
+(45, 13, 'A', 3, '2024-10-13 02:24:32', 'test');
 
 -- --------------------------------------------------------
 
@@ -208,8 +220,9 @@ CREATE TABLE `ct_result` (
 --
 
 INSERT INTO `ct_result` (`ct_result_id`, `course_id`, `student_roll`, `ct_1`, `ct_2`, `ct_3`, `ct_4`) VALUES
-(3, 10, 2003037, 14, 18, 0, 16),
-(4, 11, 2003037, 14, 16, 20, 18);
+(7, 14, 2003037, 0, 0, 0, 0),
+(16, 13, 2003009, 0, 0, 0, 0),
+(17, 13, 2003037, 14, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -321,7 +334,8 @@ CREATE TABLE `teacher_notice` (
 --
 
 INSERT INTO `teacher_notice` (`notice_id`, `notice_creator`, `department`, `time`, `notice_title`, `notice`) VALUES
-(2, 'Md. Sozib Hossain', 3, '2024-10-09 00:00:00', 'test', 'test teachers notice');
+(2, 'Md. Sozib Hossain', 3, '2024-10-09 00:00:00', 'test', 'test teachers notice'),
+(3, 'Md. Sozib Hossain', 3, '2024-10-13 02:25:06', 'test teachers', 'dawdawd');
 
 -- --------------------------------------------------------
 
@@ -385,7 +399,6 @@ ALTER TABLE `class_times`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`course_id`),
-  ADD KEY `teacher` (`course_teacher`),
   ADD KEY `dept` (`department`);
 
 --
@@ -467,19 +480,19 @@ ALTER TABLE `weekday`
 -- AUTO_INCREMENT for table `all_notice`
 --
 ALTER TABLE `all_notice`
-  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `class_routine`
 --
 ALTER TABLE `class_routine`
-  MODIFY `routine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `routine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `class_routine_details`
 --
 ALTER TABLE `class_routine_details`
-  MODIFY `routine_details_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `routine_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `class_times`
@@ -491,7 +504,7 @@ ALTER TABLE `class_times`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `course_advisors`
@@ -503,13 +516,13 @@ ALTER TABLE `course_advisors`
 -- AUTO_INCREMENT for table `ct`
 --
 ALTER TABLE `ct`
-  MODIFY `ct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `ct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `ct_result`
 --
 ALTER TABLE `ct_result`
-  MODIFY `ct_result_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ct_result_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -533,7 +546,7 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `teacher_notice`
 --
 ALTER TABLE `teacher_notice`
-  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `weekday`
@@ -571,8 +584,7 @@ ALTER TABLE `class_routine_details`
 -- Constraints for table `courses`
 --
 ALTER TABLE `courses`
-  ADD CONSTRAINT `dept` FOREIGN KEY (`department`) REFERENCES `departments` (`department_id`),
-  ADD CONSTRAINT `teacher` FOREIGN KEY (`course_teacher`) REFERENCES `teachers` (`teacher_id`);
+  ADD CONSTRAINT `dept` FOREIGN KEY (`department`) REFERENCES `departments` (`department_id`);
 
 --
 -- Constraints for table `courses_teacher_relationship`

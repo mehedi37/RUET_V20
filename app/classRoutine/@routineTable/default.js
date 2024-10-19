@@ -23,9 +23,7 @@ export default function DefaultClassRoutine() {
   useEffect(() => {
     async function fetchData() {
       try {
-        let res = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN}/api/classRoutine`
-        );
+        let res = await fetch(`/api/classRoutine`);
         let json = await res.json();
 
         if (res.status !== 200) {
