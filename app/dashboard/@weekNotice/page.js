@@ -28,10 +28,6 @@ export default function WeekNotice() {
   let list = useAsyncList({
     async load({ signal }) {
       try {
-        console.log(
-          "Fetching week update data...",
-          process.env.NEXT_PUBLIC_DOMAIN
-        );
         let res = await fetch(`/api/weekUpdate`, {
           signal,
         });
