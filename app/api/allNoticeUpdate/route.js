@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function GET(req, res) {
   try {
     const payload = await DecodeToken();
-    if (payload.accountType === "teacher") {
+    if (payload.role === "teacher") {
       const noticeInfo = await getTeacherALLNoticeInfo();
       return NextResponse.json(
         {

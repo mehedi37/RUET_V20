@@ -7,7 +7,7 @@ export default async function NoticeView({ params }) {
 
   let ctNote;
 
-  if (payload.accountType === "student") {
+  if (payload.role === "student") {
     ctNote = await getCTNoteInfo(params.noticeID);
   } else {
     ctNote = await getTeacherCTNote(params.noticeID);

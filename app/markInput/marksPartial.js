@@ -186,6 +186,7 @@ export function MarksPartial({ rows, course_id, fetchRows }) {
                 <TableCell key={column.key}>
                   {column.key === "action" ? (
                     <Tooltip
+                      showArrow
                       content="Save Changes"
                       delay={500}
                       closeDelay={250}

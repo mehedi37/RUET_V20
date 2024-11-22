@@ -7,7 +7,7 @@ export async function GET(req, res) {
   try {
     const payload = await DecodeToken();
 
-    if (payload.accountType === "student") {
+    if (payload.role === "student") {
       const studentInfo = await getRollInfo(payload.roll);
       const ctInfo = await getCTInfo(studentInfo);
       return NextResponse.json(

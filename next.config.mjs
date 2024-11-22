@@ -7,7 +7,15 @@ const nextConfig = {
         destination: "/dashboard",
         permanent: true,
       },
+      {
+        source: "/admin",
+        destination: "/admin/login",
+        permanent: true,
+      },
     ];
+  },
+  experimental: {
+    turbo: {},
   },
 };
 
