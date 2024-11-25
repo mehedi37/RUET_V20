@@ -104,7 +104,12 @@ export default function AdminHeader() {
       </NavbarContent>
       <NavbarContent justify="end" className="">
         <NavbarItem>
-          <Button as={Link} color="danger" href="#" variant="flat">
+          <Button
+            as={Link}
+            color="danger"
+            href="/admin/api/logout"
+            variant="flat"
+          >
             <p className="hidden sm:flex">Logout</p> <LogOut size={18} />
           </Button>
         </NavbarItem>

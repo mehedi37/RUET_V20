@@ -56,8 +56,14 @@ export async function middleware(req) {
     if (isAdmin && isAdminPublicRoute) {
       return NextResponse.redirect(new URL("/admin/dashboard", req.url));
     }
-    if (isAdminProtectedRoute || isProtectedRoute) {
+    if (isAdmin && isAdminProtectedRoute) {
       return NextResponse.next();
+    } else if (!isAdmin && isProtectedRoute) {
+      return NextResponse.next();
+    } else if (!isAdmin && isAdminProtectedRoute) {
+      return NextResponse.redirect(new URL("/dashboard", req.url));
+    } else if (isAdmin && isProtectedRoute) {
+      return NextResponse.redirect(new URL("/admin/dashboard", req.url));
     }
   } else {
     if (isPublicRoute || isAdminPublicRoute) {
