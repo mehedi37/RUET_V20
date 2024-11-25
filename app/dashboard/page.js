@@ -12,7 +12,7 @@ export default async function DashBoard() {
     <>
       <div className="text-center m-6">
         <h1 className="text-3xl">{greeting}</h1>
-        {payload.accountType == "teacher" && (
+        {payload.role == "teacher" && (
           <Button
             color="success"
             className="mt-6"

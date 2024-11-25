@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const { accountType, name, roll, email, password, department } =
+    const { role, name, roll, email, password, department } =
       await request.json();
 
     //  checking if all the required fields are provided
@@ -12,8 +12,8 @@ export async function POST(request) {
       !name ||
       !email ||
       !password ||
-      !accountType ||
-      (accountType === "teacher" && !department)
+      !role ||
+      (role === "teacher" && !department)
     ) {
       return NextResponse.json(
         {
@@ -22,7 +22,7 @@ export async function POST(request) {
             fields: {
               name: name ? name : "Not provided",
               email: email ? email : "Not provided",
-              accountType: accountType ? accountType : "Not provided",
+              role: role ? role : "Not provided",
               department: department ? department : "Not provided",
             },
           },
@@ -32,7 +32,7 @@ export async function POST(request) {
     }
     const encPassword = encrypt(password);
 
-    if (accountType === "student") {
+    if (role === "student") {
       await setStudents(roll, name, email, encPassword);
     } else {
       await setTeachers(name, department, email, encPassword);

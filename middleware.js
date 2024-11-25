@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
-import cookie from "cookie";
+import { parse } from "cookie"; // Correct import for the cookie module
 
 const publicRoutes = ["/login", "/registration"];
 const protectedRoutes = [
@@ -13,38 +13,62 @@ const protectedRoutes = [
   "/markInput",
 ];
 
+const adminProtectedRoutes = [
+  "/admin/dashboard",
+  "/admin/api/:path*",
+  "/admin/logout",
+];
+
+const adminPublicRoutes = ["/admin/login"];
+
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
-  const cookies = cookie.parse(req.headers.get("cookie") || "");
+  const cookies = parse(req.headers.get("cookie") || "");
   const token = cookies.token;
 
   let isAuthenticated = false;
+  let isAdmin = false;
 
   if (token) {
     try {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-      await jwtVerify(token, secret);
+      const { payload } = await jwtVerify(token, secret);
       isAuthenticated = true;
+      isAdmin = payload.role === "admin";
     } catch (err) {
       console.error("Token verification failed:", err);
     }
   }
 
-  if (isAuthenticated && publicRoutes.includes(pathname)) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
-  }
-
-  if (publicRoutes.includes(pathname)) {
-    return NextResponse.next();
-  }
+  const isPublicRoute = publicRoutes.includes(pathname);
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+  const isAdminPublicRoute = adminPublicRoutes.includes(pathname);
+  const isAdminProtectedRoute = adminProtectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
 
   if (isAuthenticated) {
-    return NextResponse.next();
-  }
-
-  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    const response = NextResponse.redirect(new URL("/login", req.url));
-    return response;
+    if (isPublicRoute) {
+      return NextResponse.redirect(new URL("/dashboard", req.url));
+    }
+    if (isAdmin && isAdminPublicRoute) {
+      return NextResponse.redirect(new URL("/admin/dashboard", req.url));
+    }
+    if (isAdminProtectedRoute || isProtectedRoute) {
+      return NextResponse.next();
+    }
+  } else {
+    if (isPublicRoute || isAdminPublicRoute) {
+      return NextResponse.next();
+    }
+    if (isAdminProtectedRoute) {
+      return NextResponse.redirect(new URL("/admin/login", req.url));
+    }
+    if (isProtectedRoute) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 
   return NextResponse.next();
@@ -56,6 +80,7 @@ export const config = {
     "/api/:path*",
     "/login",
     "/registration",
+    "/admin/:path*",
     "/:path*",
   ],
 };

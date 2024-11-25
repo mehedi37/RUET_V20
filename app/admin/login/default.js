@@ -3,13 +3,9 @@ import { useState } from "react";
 import Link from "next/link";
 import EyeButton from "@/components/eyeButton";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { ShieldCheck } from "lucide-react";
 
-export default function Login() {
-  let [role, setrole] = useState("student");
-  function handleroleChange(e) {
-    setrole(e.target.value);
-  }
-
+export default function AdminDefaultLogin() {
   let [loginStatus, setLoginStatus] = useState(null);
   let [loginMessage, setLoginMessage] = useState("");
   let [isLoading, setIsLoading] = useState(false);
@@ -20,7 +16,7 @@ export default function Login() {
     const form = e.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    fetch("/api/login", {
+    fetch("/admin/api/login", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -59,8 +55,11 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-blue-500">
-            Welcome Again
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-purple-500">
+            <div className="flex items-center justify-center">
+              <ShieldCheck size={40} />
+              &nbsp; Admin Login
+            </div>
           </h2>
         </div>
         {loginStatus === "success" ? (
@@ -70,7 +69,7 @@ export default function Login() {
           >
             <strong className="font-bold">
               Success! Click here to &nbsp;
-              <Link href="/dashboard" className="underline">
+              <Link href="/admin/dashboard" className="underline">
                 Dashboard
               </Link>
             </strong>
@@ -102,60 +101,20 @@ export default function Login() {
           <Input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label htmlFor="role" className="sr-only">
-                Account Type
+              <label htmlFor="email-address" className="sr-only">
+                Email address
               </label>
-              <Select
-                id="role"
-                name="role"
-                value={role}
-                label="Select an account type"
-                className="max-w"
-                onChange={handleroleChange}
-              >
-                <SelectItem value="student" key="student">
-                  Student
-                </SelectItem>
-                <SelectItem value="teacher" key="teacher">
-                  Teacher
-                </SelectItem>
-              </Select>
+              <Input
+                id="email-address"
+                name="email"
+                type="email"
+                label="Admin Email"
+                autoComplete="email"
+                errorMessage="Please enter a valid email"
+                required
+                isRequired
+              />
             </div>
-
-            {role === "student" && (
-              <div>
-                <label htmlFor="roll" className="sr-only">
-                  Roll
-                </label>
-                <Input
-                  id="roll"
-                  name="roll"
-                  label="Roll"
-                  min={0}
-                  type="number"
-                  autoComplete="roll"
-                  required
-                  isRequired
-                />
-              </div>
-            )}
-
-            {role === "teacher" && (
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <Input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  label="Email address"
-                  autoComplete="email"
-                  required
-                  isRequired
-                />
-              </div>
-            )}
 
             <div className="flex">
               <label htmlFor="password" className="sr-only">
@@ -167,6 +126,7 @@ export default function Login() {
                 label="Password"
                 type="password"
                 autoComplete="current-password"
+                errorMessage="Password is required"
                 radius="xs"
                 required
                 isRequired
@@ -177,25 +137,21 @@ export default function Login() {
           <div>
             <Button
               isLoading={isLoading}
-              // disabled={isLoading}
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-500 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 "
             >
               {isLoading ? "Loading..." : "Login"}
             </Button>
           </div>
         </form>
-        <small className="block text-center text-gray-500">
-          Don&apos;t have an account?&nbsp;
-          <Link href="/registration" className="text-blue-500">
-            Register
-          </Link>
-        </small>
-        <small className="block text-center text-gray-500">
-          <Link href="/admin/login" className="text-purple-500">
-            Admin Login
-          </Link>
-        </small>
+        <div className="text-center text-gray-500">
+          <small>
+            Not Admin ?&nbsp;
+            <Link href="/login" className="text-blue-500">
+              Login
+            </Link>
+          </small>
+        </div>
       </div>
     </div>
   );

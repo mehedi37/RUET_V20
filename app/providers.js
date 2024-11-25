@@ -1,9 +1,7 @@
-import {NextUIProvider} from '@nextui-org/react'
+"use client";
 
-export function Providers({children}) {
-  return (
-    <NextUIProvider>
-      {children}
-    </NextUIProvider>
-  )
+import { NextUIProvider } from "@nextui-org/react";
+
+export function Providers({ children }) {
+  return <NextUIProvider>{children}</NextUIProvider>;
 }

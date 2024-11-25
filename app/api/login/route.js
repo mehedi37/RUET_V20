@@ -4,10 +4,10 @@ import jwt from "jsonwebtoken";
 
 export async function POST(req, res) {
   try {
-    const { accountType, roll, email, password } = await req.json();
-    // console.log("AccountType: ", accountType);
+    const { role, roll, email, password } = await req.json();
+    // console.log("role: ", role);
 
-    if (!(roll || email) || !password || !accountType) {
+    if (!(roll || email) || !password || !role) {
       return NextResponse.json(
         {
           error: {
@@ -15,7 +15,7 @@ export async function POST(req, res) {
             fields: {
               roll: roll ? roll : "Not provided",
               email: email ? email : "Not provided",
-              accountType: accountType ? accountType : "Not provided",
+              role: role ? role : "Not provided",
             },
           },
         },
@@ -24,7 +24,7 @@ export async function POST(req, res) {
     }
 
     let user;
-    if (accountType === "student") {
+    if (role === "student") {
       user = await getStudent(roll, password);
     } else {
       user = await getTeacher(email, password);
@@ -45,19 +45,19 @@ export async function POST(req, res) {
       });
     } else {
       let payload;
-      if (accountType === "student") {
+      if (role === "student") {
         payload = {
           roll: user[0].student_roll,
           name: user[0].student_name,
           email: user[0].student_email,
-          accountType: "student",
+          role: "student",
         };
       } else {
         payload = {
           id: user[0].teacher_id,
           name: user[0].teacher_name,
           email: user[0].teacher_email,
-          accountType: "teacher",
+          role: "teacher",
         };
       }
       const token = jwt.sign(payload, process.env.JWT_SECRET, {

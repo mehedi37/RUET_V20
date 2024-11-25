@@ -6,7 +6,7 @@ export default async function allMainNoticeView({ params }) {
   const payload = await DecodeToken();
   let noticeNote;
 
-  if (payload.accountType === "student") {
+  if (payload.role === "student") {
     noticeNote = await getAllNoteInfo(params.noticeID);
   } else {
     noticeNote = await getTeacherALLNoteInfo(params.noticeID);

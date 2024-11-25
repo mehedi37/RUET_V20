@@ -21,7 +21,7 @@ export default function CustomNavBar({ payload }) {
 
   let menuItems = [];
 
-  if (payload.accountType == "student") {
+  if (payload.role == "student") {
     menuItems = [
       {
         name: "Dashboard",

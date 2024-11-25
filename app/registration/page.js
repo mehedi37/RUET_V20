@@ -6,9 +6,9 @@ import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 
 export default function Registration() {
   // State for account type
-  let [accountType, setAccountType] = useState("student");
-  function handleAccountTypeChange(e) {
-    setAccountType(e.target.value);
+  let [role, setrole] = useState("student");
+  function handleroleChange(e) {
+    setrole(e.target.value);
   }
 
   let [isLoading, setIsLoading] = useState(false);
@@ -102,12 +102,12 @@ export default function Registration() {
                   Account Type
                 </label>
                 <Select
-                  id="accountType"
-                  name="accountType"
-                  value={accountType}
+                  id="role"
+                  name="role"
+                  value={role}
                   label="Select an account type"
                   className="max-w"
-                  onChange={handleAccountTypeChange}
+                  onChange={handleroleChange}
                 >
                   <SelectItem value="student" key="student">
                     Student
@@ -133,7 +133,7 @@ export default function Registration() {
               </div>
 
               {/* Student part start */}
-              {accountType === "student" && (
+              {role === "student" && (
                 <div>
                   <label htmlFor="roll" className="sr-only">
                     Roll
@@ -152,7 +152,7 @@ export default function Registration() {
               )}
 
               {/* Teacher part for department */}
-              {accountType === "teacher" && (
+              {role === "teacher" && (
                 <div>
                   <label htmlFor="department" className="sr-only">
                     Department
