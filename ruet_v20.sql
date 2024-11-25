@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2024 at 11:10 PM
+-- Generation Time: Nov 25, 2024 at 03:24 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `admin_id` int(11) NOT NULL,
+  `admin_email` varchar(250) NOT NULL,
+  `admin_password` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `all_notice`
 --
 
@@ -38,14 +50,6 @@ CREATE TABLE `all_notice` (
   `department` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `all_notice`
---
-
-INSERT INTO `all_notice` (`notice_id`, `notice_creator`, `notice_title`, `notice`, `time`, `series`, `section`, `department`) VALUES
-(1, 'Md. Sozib Hossain', 'test', 'hello everyone', '2024-10-09 00:00:00', 20, 'A', 3),
-(3, 'Md. Sozib Hossain', 'test', 'dawdawd', '2024-10-13 02:24:48', 20, 'A', 3);
-
 -- --------------------------------------------------------
 
 --
@@ -58,13 +62,6 @@ CREATE TABLE `class_routine` (
   `section` varchar(10) NOT NULL,
   `yr_sem` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `class_routine`
---
-
-INSERT INTO `class_routine` (`routine_id`, `department`, `section`, `yr_sem`) VALUES
-(3, 3, 'A', 32);
 
 -- --------------------------------------------------------
 
@@ -80,14 +77,6 @@ CREATE TABLE `class_routine_details` (
   `ending_time` int(11) NOT NULL,
   `weekday` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `class_routine_details`
---
-
-INSERT INTO `class_routine_details` (`routine_details_id`, `routine_id`, `course_id`, `starting_time`, `ending_time`, `weekday`) VALUES
-(1, 3, 14, 1, 2, 1),
-(2, 3, 13, 2, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -140,7 +129,8 @@ CREATE TABLE `courses` (
 
 INSERT INTO `courses` (`course_id`, `course_code`, `course_name`, `department`, `section`, `course_credit`, `syllabus`) VALUES
 (13, 3205, 'Theory of computation', 3, 'A', 3.00, NULL),
-(14, 3201, 'Database System', 3, 'A', 3.00, NULL);
+(14, 3201, 'Database System', 3, 'A', 3.00, NULL),
+(15, 3202, 'Computer Architecture', 3, 'A', 3.00, NULL);
 
 -- --------------------------------------------------------
 
@@ -152,15 +142,6 @@ CREATE TABLE `courses_teacher_relationship` (
   `course_id` int(11) NOT NULL,
   `teacher_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `courses_teacher_relationship`
---
-
-INSERT INTO `courses_teacher_relationship` (`course_id`, `teacher_id`) VALUES
-(13, 6),
-(13, 19),
-(14, 4);
 
 -- --------------------------------------------------------
 
@@ -191,14 +172,6 @@ CREATE TABLE `ct` (
   `note` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `ct`
---
-
-INSERT INTO `ct` (`ct_id`, `course_id`, `section`, `department`, `time`, `note`) VALUES
-(44, 13, 'A', 3, '2024-10-13 08:00:33', 'test'),
-(45, 13, 'A', 3, '2024-10-13 02:24:32', 'test');
-
 -- --------------------------------------------------------
 
 --
@@ -214,15 +187,6 @@ CREATE TABLE `ct_result` (
   `ct_3` float NOT NULL DEFAULT 0,
   `ct_4` float NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ct_result`
---
-
-INSERT INTO `ct_result` (`ct_result_id`, `course_id`, `student_roll`, `ct_1`, `ct_2`, `ct_3`, `ct_4`) VALUES
-(7, 14, 2003037, 0, 0, 0, 0),
-(16, 13, 2003009, 0, 0, 0, 0),
-(17, 13, 2003037, 14, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -277,15 +241,6 @@ CREATE TABLE `students` (
   `student_password` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `students`
---
-
-INSERT INTO `students` (`student_roll`, `student_name`, `student_email`, `student_password`) VALUES
-(2003009, 'Sadia Rahman Sharna', 'sadiasharna3@gmail.com', 'U2FsdGVkX1/moxCOPPI0EcUWnQmtcb+qQ0xT9kanHVY='),
-(2003037, 'Mehedi Hasan', 'mjmehedihasanoo7@gmail.com', 'U2FsdGVkX1/moxCOPPI0EcUWnQmtcb+qQ0xT9kanHVY='),
-(2003091, 'Sadia Sharna Test', 'sadiasharna2@gmail.com', 'U2FsdGVkX19Jwg4TEDPPs9ypfHj6MhXJsfWbxRQqqFE=');
-
 -- --------------------------------------------------------
 
 --
@@ -299,20 +254,6 @@ CREATE TABLE `teachers` (
   `teacher_email` varchar(250) NOT NULL,
   `teacher_password` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `teachers`
---
-
-INSERT INTO `teachers` (`teacher_id`, `teacher_name`, `department_id`, `teacher_email`, `teacher_password`) VALUES
-(1, 'Dr. Md. Shahid Uz Zaman', 3, 'szaman22.ruet@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(3, 'Mohiuddin Ahmed', 3, 'mohiuddin.nirob.mn@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(4, 'Barshon Sen', 3, 'sen.barshon@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(5, 'Dr. Md. Selim Hossain', 1, 'engg.selim@gmail.com', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(6, 'Md. Mazharul Islam', 3, 'mazharul.islam@cse.ruet.ac.bd', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(7, 'Utsha Das', 3, 'utsha.das@cse.ruet.ac.bd', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(8, 'Md. Nasif Osman Khansur', 3, 'nasif.khansur@cse.ruet.ac.bd', 'U2FsdGVkX19nhM5DvmMWTMkXgM2xNBoLQXsyt8bu4uE='),
-(19, 'Md. Sozib Hossain', 3, 'sozib.hossain@cse.ruet.ac.bd', 'U2FsdGVkX1/FGy4Uu/qjdug0qIMZJwd57Qnmn9C6JUg=');
 
 -- --------------------------------------------------------
 
@@ -328,14 +269,6 @@ CREATE TABLE `teacher_notice` (
   `notice_title` varchar(250) NOT NULL,
   `notice` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `teacher_notice`
---
-
-INSERT INTO `teacher_notice` (`notice_id`, `notice_creator`, `department`, `time`, `notice_title`, `notice`) VALUES
-(2, 'Md. Sozib Hossain', 3, '2024-10-09 00:00:00', 'test', 'test teachers notice'),
-(3, 'Md. Sozib Hossain', 3, '2024-10-13 02:25:06', 'test teachers', 'dawdawd');
 
 -- --------------------------------------------------------
 
@@ -362,6 +295,12 @@ INSERT INTO `weekday` (`day_id`, `weekday_name`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_id`);
 
 --
 -- Indexes for table `all_notice`
@@ -477,22 +416,28 @@ ALTER TABLE `weekday`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `all_notice`
 --
 ALTER TABLE `all_notice`
-  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `class_routine`
 --
 ALTER TABLE `class_routine`
-  MODIFY `routine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `routine_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `class_routine_details`
 --
 ALTER TABLE `class_routine_details`
-  MODIFY `routine_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `routine_details_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `class_times`
@@ -504,25 +449,25 @@ ALTER TABLE `class_times`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `course_advisors`
 --
 ALTER TABLE `course_advisors`
-  MODIFY `advisor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `advisor_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ct`
 --
 ALTER TABLE `ct`
-  MODIFY `ct_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `ct_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ct_result`
 --
 ALTER TABLE `ct_result`
-  MODIFY `ct_result_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `ct_result_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -540,13 +485,13 @@ ALTER TABLE `greetings`
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `teacher_notice`
 --
 ALTER TABLE `teacher_notice`
-  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `weekday`
